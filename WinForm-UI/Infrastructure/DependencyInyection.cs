@@ -1,0 +1,24 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using WinForm_UI.Services;
+using WinForm_UI.Productos;
+using WinForm_UI.Contracts;
+
+namespace WinForm_UI.Infrastructure
+{
+    public static class DependencyInyection
+    {
+        public static IServiceCollection AddForms(this IServiceCollection services)
+        {
+            services.AddSingleton<IEventBus, EventBus>();
+            services.AddSingleton<IContextFactory, ContextFactory>();
+            services.AddSingleton<IFormFactoryService, FormFactoryService>();
+            services.AddSingleton<Principal>();
+            return services;
+        }
+    }
+}
