@@ -10,12 +10,14 @@ namespace Entities
     {
         public Ingrediente Ingrediente { get; set; } = null!;
         public decimal Cantidad { get; set; }
+        public UnidadDeMedida UnidadDeMedida { get; set; } = null!;
         public CantidadIngrediente Clone()
         {
             return new CantidadIngrediente
             {
                 Ingrediente = this.Ingrediente.Clone(),
-                Cantidad = this.Cantidad
+                Cantidad = this.Cantidad,
+                UnidadDeMedida = this.UnidadDeMedida.Clone()
             };
         }
         public override string ToString()

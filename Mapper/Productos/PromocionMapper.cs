@@ -24,7 +24,7 @@ namespace Mapper.Productos
 
             return promocion;
         }
-        public static Promocion ToPromocion(ProductoModel producto, List<TipoProductoModel> tipos, List<PromocionCantidadTipoProductoModel> promocionRelations, TipoProducto tipoProducto)
+        public static Promocion ToPromocion(this ProductoModel producto, List<TipoProductoModel> tipos, List<PromocionCantidadTipoProductoModel> promocionRelations, TipoProducto tipoProducto)
         {
             Promocion promocion = new Promocion
             {

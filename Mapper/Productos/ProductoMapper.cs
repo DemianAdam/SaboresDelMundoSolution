@@ -31,7 +31,7 @@ namespace Mapper.Productos
 
             if (tipoProducto.Tipo == "Promocion")
             {
-                return PromocionMapper.ToPromocion(producto, tipos, promocionRelations, tipoProducto);
+                return producto.ToPromocion(tipos, promocionRelations, tipoProducto);
             }
 
             return new Producto
@@ -61,7 +61,7 @@ namespace Mapper.Productos
             return productos;
         }
 
-        
+
 
         public static List<ProductoSubProductoModel>? GetSubProductosModel(this Producto producto)
         {
@@ -71,7 +71,7 @@ namespace Mapper.Productos
                 SubProductoId = sp.Id
             }).ToList();
         }
-        
-        
+
+
     }
 }
