@@ -1,8 +1,12 @@
-﻿using BLL.Insumos.Contracts;
+﻿using BLL.Ingredientes.Contracts;
+using BLL.Insumos.Contracts;
+using DAL.Ingredientes;
+using DAL.Ingredientes.Models;
 using DAL.Insumos;
 using DAL.Insumos.Contracts;
 using DAL.Insumos.Models;
 using Entities;
+using Mapper.Ingredientes;
 using Mapper.Insumos;
 using System;
 using System.Collections.Generic;
@@ -14,19 +18,19 @@ namespace BLL.Insumos.Services
 {
     internal class InsumoService : IInsumoService
     {
-        private readonly IInsumoUnitOfWork insumoRepository;
+        private readonly IInsumoUnitOfWork insumoUnitOfWork;
 
         public event EventHandler? OnOperationFinished;
 
         public InsumoService(IInsumoUnitOfWork insumoRepository)
         {
-            this.insumoRepository = insumoRepository;
+            this.insumoUnitOfWork = insumoRepository;
         }
 
         public List<Insumo> GetAll()
         {
-            List<InsumoModel> insumoModels = insumoRepository.GetAllInsumos();
-            List<TipoInsumoModel> tipoInsumoModels = insumoRepository.GetAllTiposInsumos();
+            List<InsumoModel> insumoModels = insumoUnitOfWork.GetAllInsumos();
+            List<TipoInsumoModel> tipoInsumoModels = insumoUnitOfWork.GetAllTiposInsumos();
             List<Insumo> insumos = insumoModels.ToInsumos(tipoInsumoModels);
 
             return insumos;
@@ -35,14 +39,28 @@ namespace BLL.Insumos.Services
         public void Insert(Insumo insumo)
         {
             InsumoModel insumoModel = insumo.ToModel();
-            insumoRepository.Insert(insumoModel);
+            if (insumoUnitOfWork.Exists(insumoModel))
+            {
+                throw new Exception("El insumo ya existe en la base de datos.");
+            }
+            if (insumo.Tipo.Tipo == "Ingrediente")
+            {
+                Ingrediente ingrediente = new Ingrediente
+                {
+                    Nombre = insumoModel.Nombre,
+                    Descripcion = insumoModel.Descripcion,
+                };
+                IngredienteModel ingredienteModel = ingrediente.ToModel();
+                insumoModel.IngredienteModel = ingredienteModel;
+            }
+            insumoUnitOfWork.Insert(insumoModel);
             OnOperationFinished?.Invoke(this, EventArgs.Empty);
         }
 
         public void Remove(Insumo insumo)
         {
             InsumoModel insumoModel = insumo.ToModel();
-            insumoRepository.Remove(insumoModel);
+            insumoUnitOfWork.Remove(insumoModel);
             OnOperationFinished?.Invoke(this, EventArgs.Empty);
 
         }
@@ -50,7 +68,7 @@ namespace BLL.Insumos.Services
         public void Update(Insumo insumo)
         {
             InsumoModel insumoModel = insumo.ToModel();
-            insumoRepository.Update(insumoModel);
+            insumoUnitOfWork.Update(insumoModel);
             OnOperationFinished?.Invoke(this, EventArgs.Empty);
         }
     }

@@ -11,6 +11,10 @@ namespace Mapper.Ingredientes
 {
     public static class RecetaMapper
     {
+        public static List<Receta> ToRecetas(this List<IngredienteModel> recetaModels, List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels, List<IngredienteModel> ingredienteModels, List<UnidadDeMedidaModel> unidadDeMedidaModels)
+        {
+            return recetaModels.Select(recetaModel => recetaModel.ToReceta(recetaCantidadIngredienteModels, ingredienteModels, unidadDeMedidaModels)).ToList();
+        }
         public static Receta ToReceta(this IngredienteModel recetaModel, List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels, List<IngredienteModel> ingredienteModels, List<UnidadDeMedidaModel> unidadDeMedidaModels)
         {
             Receta receta = new Receta

@@ -5,6 +5,9 @@ using DAL.Compra.Contracts;
 using DAL.Compra.Repositories;
 using DAL.Configuraciones.Contracts;
 using DAL.Configuraciones.Repositories;
+using DAL.Ingredientes;
+using DAL.Ingredientes.Contracts;
+using DAL.Ingredientes.Repositories;
 using DAL.Insumos;
 using DAL.Insumos.Contracts;
 using DAL.Insumos.Repositories;
@@ -33,7 +36,10 @@ namespace DAL
             services.AddTransient<IPromocionCantidadProductosRepository, PromocionCantidadProductosRepository>();
             services.AddTransient<ITipoProductoRepository, TipoProductoRepository>();
             services.AddTransient<IProductoUnitOfWork, ProductoUnitOfWork>();
-
+            services.AddTransient<IIngredienteRepository, IngredienteRepository>();
+            services.AddTransient<IIngredienteUnitOfWork, IngredienteUnitOfWork>();
+            services.AddTransient<IRecetaCantidadIngredienteRepository, RecetaCantidadIngredienteRepository>();
+            services.AddTransient<IRecetaRepository, RecetaRepository>();
 
             return services;
         }

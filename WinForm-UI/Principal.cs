@@ -5,6 +5,7 @@ using WinForm_UI.Forms.Insumos;
 using WinForm_UI.Configuraciones;
 using WinForm_UI.Forms.Compras;
 using WinForm_UI.Contracts;
+using WinForm_UI.Forms.Ingredientes;
 
 namespace WinForm_UI
 {
@@ -69,6 +70,12 @@ namespace WinForm_UI
         {
             GestorProveedores gestorProveedores = formFactoryService.CreateForm<GestorProveedores>();
             this.AddMdiChild(gestorProveedores);
+        }
+
+        private void gestorDeRecetasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestorRecetas gestorRecetas = formFactoryService.CreateForm<GestorRecetas>();
+            this.AddMdiChild(gestorRecetas);
         }
     }
 }

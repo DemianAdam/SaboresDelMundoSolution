@@ -20,10 +20,12 @@ namespace Mapper.Ingredientes
         {
             return new RecetaCantidadIngredienteModel
             {
+                Id = cantidadIngrediente.Id,
                 RecetaId = receta.Id,
                 IngredienteId = cantidadIngrediente.Ingrediente.Id,
                 UnidadDeMedidaId = cantidadIngrediente.UnidadDeMedida.Id,
-                Cantidad = cantidadIngrediente.Cantidad
+                Cantidad = cantidadIngrediente.Cantidad,
+                DesperdicioAceptado = cantidadIngrediente.DesperdicioAceptado
             };
         }
         public static List<CantidadIngrediente> ToCantidadIngredientes(this List<RecetaCantidadIngredienteModel> cantidadIngredienteModels, List<IngredienteModel> ingredienteModels, List<UnidadDeMedidaModel> unidadDeMedidaModels, List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels)
@@ -49,9 +51,11 @@ namespace Mapper.Ingredientes
 
             CantidadIngrediente cantidadIngrediente = new CantidadIngrediente
             {
+                Id = cantidadIngredienteModel.Id,
                 Cantidad = cantidadIngredienteModel.Cantidad,
                 Ingrediente = ingrediente,
-                UnidadDeMedida = unidadDeMedida
+                UnidadDeMedida = unidadDeMedida,
+                DesperdicioAceptado = cantidadIngredienteModel.DesperdicioAceptado
             };
 
             return cantidadIngrediente;

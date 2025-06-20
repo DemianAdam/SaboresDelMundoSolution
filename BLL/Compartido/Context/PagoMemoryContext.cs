@@ -34,7 +34,7 @@ namespace BLL.Compartido.Context
         {
             if (transaccion.Pagos is null)
             {
-                transaccion.Pagos = new List<Pago>();
+                return new List<Pago>();
             }
             return transaccion.Pagos;
         }

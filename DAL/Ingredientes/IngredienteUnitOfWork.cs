@@ -36,6 +36,7 @@ namespace DAL.Ingredientes
         public void Insert(IngredienteModel ingrediente, List<RecetaCantidadIngredienteModel>? recetaCantidadIngredienteModels = null)
         {
             using SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
             using SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
 
             try
@@ -75,6 +76,7 @@ namespace DAL.Ingredientes
         public void Update(IngredienteModel ingrediente, List<RecetaCantidadIngredienteModel>? recetaCantidadIngredienteModels = null)
         {
             using SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
             using SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
             try
             {

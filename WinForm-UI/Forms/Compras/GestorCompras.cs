@@ -49,13 +49,12 @@ namespace WinForm_UI.Forms.Compras
 
         private void ActualizarProveedores()
         {
-            FormHelper.UpdateControl(cmbProveedores, proveedorService);
+            FormHelper.UpdateControl(cmbProveedores, proveedorService, nameof(Proveedor.Nombre));
         }
 
         private void GestorCompras_Load(object sender, EventArgs e)
         {
             cmbProveedores.Enabled = cboxTieneProveedor.Checked;
-            cmbProveedores.DisplayMember = nameof(Proveedor.Nombre);
             dtpFecha.Value = DateTime.Now;
             ActualizarProveedores();
             FormHelper.UpdateControl(dgvCompras, compraService);
@@ -171,7 +170,7 @@ namespace WinForm_UI.Forms.Compras
                 MessageBox.Show("Debe seleccionar una compra para modificar los detalles.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var context = contextFactory.CreateInstance<DetalleCompraMemoryContext>(compra);
+            var context = contextFactory.CreateInstance<DetalleCompraDbContext>(compra);
             DetallesCompraForm form = formFactoryService.CreateForm<DetallesCompraForm>(context);
             form.ShowDialog();
         }

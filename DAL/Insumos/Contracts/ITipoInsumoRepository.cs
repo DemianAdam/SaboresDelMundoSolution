@@ -14,6 +14,6 @@ namespace DAL.Insumos.Contracts
         void Insert(TipoInsumoModel tipoProducto, SqlConnection connection, SqlTransaction? sqlTransaction = null);
         void Remove(TipoInsumoModel tipoProducto, SqlConnection connection, SqlTransaction? sqlTransaction = null);
         void Update(TipoInsumoModel tipoProducto, SqlConnection connection, SqlTransaction? sqlTransaction = null);
-        List<TipoInsumoModel> GetAll(SqlConnection sqlConnection);
+        List<TipoInsumoModel> GetAll(SqlConnection sqlConnection, SqlTransaction? sqlTransaction = null);
     }
 }

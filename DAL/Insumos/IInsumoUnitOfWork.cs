@@ -17,6 +17,6 @@ namespace DAL.Insumos
         public void Insert(TipoInsumoModel tipoInsumo);
         public void Remove(TipoInsumoModel tipoInsumo);
         public void Update(TipoInsumoModel tipoInsumo);
-
+        bool Exists(InsumoModel insumoModel);
     }
 }

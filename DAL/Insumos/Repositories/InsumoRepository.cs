@@ -14,10 +14,16 @@ namespace DAL.Insumos.Repositories
 {
     internal class InsumoRepository : IInsumoRepository
     {
-        public List<InsumoModel> GetAll(SqlConnection sqlConnection)
+        public bool Exists(InsumoModel insumoModel, SqlConnection sqlConnection)
+        {
+            string spExistsInsumo = "sp_exists_insumo";
+            return sqlConnection.ExecuteScalar<bool>(spExistsInsumo, new { nombre = insumoModel.Nombre, descripcion = insumoModel.Descripcion }, commandType: CommandType.StoredProcedure);
+        }
+
+        public List<InsumoModel> GetAll(SqlConnection sqlConnection, SqlTransaction? sqlTransaction = null)
         {
             string spSelectAllInsumos = "sp_select_all_insumos";
-            List<InsumoModel> insumos = sqlConnection.Query<InsumoModel>(spSelectAllInsumos, commandType: CommandType.StoredProcedure).AsList();
+            List<InsumoModel> insumos = sqlConnection.Query<InsumoModel>(spSelectAllInsumos, transaction: sqlTransaction, commandType: CommandType.StoredProcedure).AsList();
             return insumos;
         }
 

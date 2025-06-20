@@ -49,7 +49,7 @@
             // 
             this.dgvCompras.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCompras.Dock = DockStyle.Bottom;
-            this.dgvCompras.Location = new Point(0, 100);
+            this.dgvCompras.Location = new Point(0, 101);
             this.dgvCompras.Name = "dgvCompras";
             this.dgvCompras.Size = new Size(524, 280);
             this.dgvCompras.TabIndex = 0;
@@ -173,7 +173,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(524, 380);
+            ClientSize = new Size(524, 381);
             Controls.Add(this.btnModificar);
             Controls.Add(this.btnModificarPagos);
             Controls.Add(this.btnModificarDetalles);

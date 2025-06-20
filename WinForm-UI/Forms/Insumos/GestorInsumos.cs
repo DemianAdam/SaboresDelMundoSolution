@@ -29,7 +29,7 @@ namespace WinForm_UI.Forms.Insumos
             this.eventBus = eventBus;
             this.eventBus.Subscribe<TipoInsumoChangedEvent>(TipoInsumoChanged);
             this.insumoService.OnOperationFinished += (s, e) => FormHelper.UpdateControl(dgvInsumos, insumoService);
-          
+
         }
 
         private void TipoInsumoChanged(TipoInsumoChangedEvent @event)
@@ -56,9 +56,14 @@ namespace WinForm_UI.Forms.Insumos
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            Insumo? insumo = GetObjectFromInputs();
+            if (insumo is null)
+            {
+                return;
+            }
+
             try
             {
-                Insumo insumo = GetObjectFromInputs();
                 insumoService.Insert(insumo);
             }
             catch (Exception ex)
@@ -83,7 +88,11 @@ namespace WinForm_UI.Forms.Insumos
                 return;
             }
             insumo = GetObjectFromInputs(insumo.Id);
-            insumoService.Update(insumo);
+
+            if (insumo is not null)
+            {
+                insumoService.Update(insumo);
+            }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -118,22 +127,23 @@ namespace WinForm_UI.Forms.Insumos
             }
         }
 
-        public Insumo GetObjectFromInputs(int id = 0)
+        public Insumo? GetObjectFromInputs(int id = -1)
         {
             string nombre = txtNombre.Text.Trim();
-            string descripcion = txtDescripcion.Text.Trim();
+            string? descripcion = txtDescripcion.GetNullableText();
             TipoInsumo? tipoInsumo = cmbTipo.GetSelected<TipoInsumo>();
 
             if (string.IsNullOrEmpty(nombre) || tipoInsumo is null)
             {
-                throw new ArgumentException("Nombre y tipo de insumo son obligatorios.");
+                MessageBox.Show("El nombre y el tipo de insumo son obligatorios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
 
             return new Insumo
             {
                 Id = id,
                 Nombre = nombre,
-                Descripcion = descripcion == string.Empty ? null : descripcion,
+                Descripcion = descripcion,
                 Tipo = tipoInsumo
             };
         }

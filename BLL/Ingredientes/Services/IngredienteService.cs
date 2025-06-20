@@ -2,6 +2,7 @@
 using DAL.Configuraciones.Contracts;
 using DAL.Configuraciones.Models;
 using DAL.Ingredientes;
+using DAL.Ingredientes.Contracts;
 using DAL.Ingredientes.Models;
 using Entities;
 using Mapper.Ingredientes;
@@ -17,11 +18,13 @@ namespace BLL.Ingredientes.Services
     {
         private readonly IIngredienteUnitOfWork ingredienteUnitOfWork;
         private readonly IUnidadDeMedidaRepository unidadDeMedidaRepository;
+        private readonly IRecetaRepository recetaRepository;
 
-        public IngredienteService(IIngredienteUnitOfWork ingredienteUnitOfWork, IUnidadDeMedidaRepository unidadDeMedidaRepository)
+        public IngredienteService(IIngredienteUnitOfWork ingredienteUnitOfWork, IUnidadDeMedidaRepository unidadDeMedidaRepository, IRecetaRepository recetaRepository)
         {
             this.ingredienteUnitOfWork = ingredienteUnitOfWork;
             this.unidadDeMedidaRepository = unidadDeMedidaRepository;
+            this.recetaRepository = recetaRepository;
         }
         public event EventHandler? OnOperationFinished;
 
@@ -53,7 +56,7 @@ namespace BLL.Ingredientes.Services
             {
                 throw;
             }
-            
+
         }
 
         public void Remove(Ingrediente ingrediente)
@@ -68,7 +71,7 @@ namespace BLL.Ingredientes.Services
             {
                 throw;
             }
-            
+
         }
 
         public void Update(Ingrediente ingrediente)
@@ -88,7 +91,7 @@ namespace BLL.Ingredientes.Services
             {
                 throw;
             }
-            
+
         }
     }
 }

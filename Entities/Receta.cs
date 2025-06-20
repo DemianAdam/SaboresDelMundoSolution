@@ -31,26 +31,32 @@ namespace Entities
             return true;
         }
 
-        public void AddOrUpdateCantidadIngrediente(Ingrediente ingrediente, int cantidad)
+        public void AddOrUpdateCantidadIngrediente(CantidadIngrediente cantidadIngrediente)
         {
             if (CantidadIngredientes is null)
             {
                 return;
             }
-            CantidadIngrediente? cantidadIngrediente = CantidadIngredientes
-                            .FirstOrDefault(ci => ci.Ingrediente.Id == ingrediente.Id);
-            if (cantidadIngrediente is null)
+            CantidadIngrediente? findedCantidadIngrediente = CantidadIngredientes
+                            .FirstOrDefault(ci => ci.Ingrediente.Id == cantidadIngrediente.Ingrediente.Id);
+            if (findedCantidadIngrediente is null)
             {
-                CantidadIngredientes.Add(new CantidadIngrediente
-                {
-                    Ingrediente = ingrediente.Clone(),
-                    Cantidad = cantidad
-                });
+                CantidadIngredientes.Add(cantidadIngrediente.Clone());
             }
             else
             {
-                cantidadIngrediente.Cantidad = cantidad;
+                findedCantidadIngrediente.Cantidad = cantidadIngrediente.Cantidad;
+                findedCantidadIngrediente.UnidadDeMedida = cantidadIngrediente.UnidadDeMedida.Clone();
+                findedCantidadIngrediente.DesperdicioAceptado = cantidadIngrediente.DesperdicioAceptado;
             }
+        }
+
+        public bool TieneReceta(Receta receta)
+        {
+            if (CantidadIngredientes is null || CantidadIngredientes.Count == 0)
+                return false;
+            return CantidadIngredientes.Any(ci => ci.Ingrediente.Id == receta.Id || 
+                                                   (ci.Ingrediente is Receta r && r.TieneReceta(receta)));
         }
     }
 }

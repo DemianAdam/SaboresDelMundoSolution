@@ -13,6 +13,7 @@ namespace DAL.Ingredientes.Contracts
         public int Insert(IngredienteModel ingrediente, SqlConnection connection, SqlTransaction? sqlTransaction = null);
         public void Remove(IngredienteModel ingrediente, SqlConnection connection, SqlTransaction? sqlTransaction = null);
         public void Update(IngredienteModel ingrediente, SqlConnection connection, SqlTransaction? sqlTransaction = null);
-        public List<IngredienteModel> GetAll(SqlConnection sqlConnection);
+        public List<IngredienteModel> GetAll(SqlConnection sqlConnection, SqlTransaction? sqlTransaction = null);
+        public bool Exists(IngredienteModel ingrediente, SqlConnection connection, SqlTransaction? sqlTransaction = null);
     }
 }

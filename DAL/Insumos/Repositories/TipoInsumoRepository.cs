@@ -13,10 +13,10 @@ namespace DAL.Insumos.Repositories
         {
         }
 
-        public List<TipoInsumoModel> GetAll(SqlConnection sqlConnection)
+        public List<TipoInsumoModel> GetAll(SqlConnection sqlConnection, SqlTransaction? sqlTransaction = null)
         {
             string spSelectAllTipoInsumo = "sp_select_all_tipo_insumos";
-            List<TipoInsumoModel> tiposInsumo = sqlConnection.Query<TipoInsumoModel>(spSelectAllTipoInsumo, commandType: CommandType.StoredProcedure).AsList();
+            List<TipoInsumoModel> tiposInsumo = sqlConnection.Query<TipoInsumoModel>(spSelectAllTipoInsumo, transaction: sqlTransaction, commandType: CommandType.StoredProcedure).AsList();
             return tiposInsumo;
         }
 

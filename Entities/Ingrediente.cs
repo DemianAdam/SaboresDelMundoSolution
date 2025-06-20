@@ -11,7 +11,7 @@ namespace Entities
         public int Id { get; set; }
         public string Nombre { get; set; } = null!;
         public string? Descripcion { get; set; }
-        
+
         public virtual Ingrediente Clone()
         {
             return new Ingrediente
@@ -20,6 +20,10 @@ namespace Entities
                 Nombre = this.Nombre,
                 Descripcion = this.Descripcion
             };
+        }
+        public override string ToString()
+        {
+            return $"{Nombre}{(string.IsNullOrEmpty(Descripcion) ? string.Empty : $" ({Descripcion})")}";
         }
     }
 }

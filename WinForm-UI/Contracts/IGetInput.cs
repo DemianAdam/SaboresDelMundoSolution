@@ -2,6 +2,6 @@
 {
     public interface IGetInput<T>
     {
-        T GetObjectFromInputs(int id = 0);    
+        T? GetObjectFromInputs(int id = -1);    
     }
 }
