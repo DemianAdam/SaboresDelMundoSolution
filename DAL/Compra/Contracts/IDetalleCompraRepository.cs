@@ -11,6 +11,7 @@ namespace DAL.Compra.Contracts
     public interface IDetalleCompraRepository
     {
         List<DetalleCompraModel> GetAll();
+        List<DetalleCompraModel> GetAllByCompraId(CompraModel compraModel, SqlConnection? connection = null, SqlTransaction? sqlTransaction = null);
         void Insert(DetalleCompraModel detalleCompra, SqlConnection? connection = null, SqlTransaction? sqlTransaction = null);
         void Update(DetalleCompraModel detalleCompra, SqlConnection? connection = null, SqlTransaction? sqlTransaction = null);
         void Remove(DetalleCompraModel detalleCompra, SqlConnection? connection = null, SqlTransaction? sqlTransaction = null);

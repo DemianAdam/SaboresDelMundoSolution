@@ -12,6 +12,8 @@ using BLL.Configuraciones.Contracts;
 using BLL.Configuraciones.Services;
 using BLL.Ingredientes.Contracts;
 using BLL.Ingredientes.Services;
+using BLL.Compras.Validators;
+using Entities;
 
 
 namespace BLL
@@ -31,6 +33,7 @@ namespace BLL
             services.AddTransient<IIngredienteService, IngredienteService>();
             services.AddTransient<IRecetaService, RecetaService>();
             services.AddTransient<IRecetaCantidadService, RecetaCantidadService>();
+            services.AddTransient<IDetalleCompraService, DetalleCompraService>();
 
 
             return services;

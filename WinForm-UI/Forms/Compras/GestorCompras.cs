@@ -15,6 +15,7 @@ using BLL.Compras.Context;
 using WinForm_UI.Contracts;
 using System.Diagnostics;
 using WinForm_UI.Events;
+using Interfaces;
 
 namespace WinForm_UI.Forms.Compras
 {

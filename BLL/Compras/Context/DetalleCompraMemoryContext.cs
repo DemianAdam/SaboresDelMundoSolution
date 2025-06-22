@@ -11,11 +11,13 @@ namespace BLL.Compras.Context
     public class DetalleCompraMemoryContext : IDetalleCompraContext
     {
         private readonly Compra compra;
+        private readonly IValidator<DetalleCompra> validator;
 
         public event EventHandler? OnOperationFinished;
         public DetalleCompraMemoryContext(Compra compra)
         {
             this.compra = compra;
+            this.validator = validator;
         }
         public void Add(DetalleCompra detalleCompra)
         {
@@ -23,6 +25,12 @@ namespace BLL.Compras.Context
             {
                 compra.Detalles = new List<DetalleCompra>();
             }
+
+            if (!validator.Validate(detalleCompra))
+            {
+                throw new ArgumentException("DetalleCompra is not valid.", nameof(detalleCompra));
+            }
+
             compra.Detalles.Add(detalleCompra);
             OnOperationFinished?.Invoke(this, EventArgs.Empty);
         }

@@ -27,6 +27,7 @@ namespace Mapper.Transacciones.Compras
                 Fecha = compraModel.Fecha,
                 Detalles = detalleCompraModels.Where(d => d.CompraId == compraModel.Id).ToList().ToDetalles(insumoModels, tipoInsumoModels, unidadDeMedidaModels),
                 Pagos = pagos.Where(p => p.CompraId == compraModel.Id).ToList().ToPagos(),
+                MontoTotal = compraModel.Total
             };
         }
         public static CompraModel ToModel(this Compra compra)

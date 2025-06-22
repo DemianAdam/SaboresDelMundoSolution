@@ -17,12 +17,15 @@ namespace Mapper.Ingredientes
         }
         public static Receta ToReceta(this IngredienteModel recetaModel, List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels, List<IngredienteModel> ingredienteModels, List<UnidadDeMedidaModel> unidadDeMedidaModels)
         {
+            List<RecetaCantidadIngredienteModel> cantidadIngredientes = recetaCantidadIngredienteModels
+                .Where(rcim => rcim.RecetaId == recetaModel.Id)
+                .ToList();
             Receta receta = new Receta
             {
                 Id = recetaModel.Id,
                 Nombre = recetaModel.Nombre,
                 Descripcion = recetaModel.Descripcion,
-                CantidadIngredientes = recetaCantidadIngredienteModels.ToCantidadIngredientes(ingredienteModels, unidadDeMedidaModels, recetaCantidadIngredienteModels)
+                CantidadIngredientes = cantidadIngredientes.ToCantidadIngredientes(ingredienteModels, unidadDeMedidaModels, recetaCantidadIngredienteModels)
             };
 
             return receta;

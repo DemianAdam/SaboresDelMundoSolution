@@ -2,6 +2,7 @@
 using BLL.Ingredientes.Context;
 using BLL.Ingredientes.Contracts;
 using Entities;
+using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

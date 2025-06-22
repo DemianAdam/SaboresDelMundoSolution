@@ -43,7 +43,14 @@ namespace BLL.Ingredientes.Services
             {
                 if (i is Receta r)
                 {
-                    return r.TieneReceta(receta);
+                    if (r.TieneReceta(receta))
+                    {
+                        return false; // No incluir recetas que ya contienen la receta actual
+                    }
+                    if (r.Id == receta.Id)
+                    {
+                        return false;
+                    }
                 }
                 return true;
             }

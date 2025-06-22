@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WinForm_UI.Services;
 using WinForm_UI.Productos;
 using WinForm_UI.Contracts;
+using Interfaces;
 
 namespace WinForm_UI.Infrastructure
 {

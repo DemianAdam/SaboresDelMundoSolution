@@ -20,8 +20,19 @@ namespace DAL.Compra.Repositories
             return detallesComprasModel;
         }
 
+        public List<DetalleCompraModel> GetAllByCompraId(CompraModel compraModel, SqlConnection? connection = null, SqlTransaction? sqlTransaction = null)
+        {
+            if (connection is null)
+            {
+                connection = new SqlConnection(_connectionString);
+            }
+            string spSelectDetallesCompraByCompraId = "sp_select_detalles_compra_by_compra_id";
+            List<DetalleCompraModel> detallesComprasModel = connection.Query<DetalleCompraModel>(spSelectDetallesCompraByCompraId, new { compraId = compraModel.Id }, commandType: CommandType.StoredProcedure, transaction: sqlTransaction).AsList();
+            return detallesComprasModel;
+        }
+
         public void Insert(DetalleCompraModel detalleCompra, SqlConnection? connection = null, SqlTransaction? sqlTransaction = null)
-        { 
+        {
             if (connection is null)
             {
                 connection = new SqlConnection(_connectionString);

@@ -40,7 +40,12 @@ namespace BLL.Compras.Services
 
         public List<DetalleCompra> GetAllByPurchaseId(Compra compra)
         {
-            throw new NotImplementedException();
+            List<InsumoModel> insumos = insumoUnitOfWork.GetAllInsumos();
+            List<TipoInsumoModel> tiposInsumos = insumoUnitOfWork.GetAllTiposInsumos();
+            List<UnidadDeMedidaModel> unidadDeMedidas = unidadDeMedidaRepository.GetAll();
+            CompraModel compraModel = compra.ToModel();
+            List<DetalleCompra> list = detalleCompraRepository.GetAllByCompraId(compraModel).ToDetalles(insumos, tiposInsumos, unidadDeMedidas);
+            return list;
         }
 
         public void Insert(DetalleCompra detalleCompra, Compra compra)

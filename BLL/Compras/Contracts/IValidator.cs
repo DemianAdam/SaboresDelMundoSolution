@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinForm_UI.Events
+namespace BLL.Compras.Contracts
 {
-    public enum ActionType
+    public interface IValidator<T>
     {
-        Add,
-        Update,
-        Remove,
+        bool Validate(T entity);
     }
 }

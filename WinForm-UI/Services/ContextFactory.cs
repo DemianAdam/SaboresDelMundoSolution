@@ -1,11 +1,10 @@
-﻿using BLL.Compartido.Contracts;
+﻿using Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WinForm_UI.Contracts;
 
 namespace WinForm_UI.Services
 {
