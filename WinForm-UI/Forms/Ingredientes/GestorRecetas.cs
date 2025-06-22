@@ -123,7 +123,7 @@ namespace WinForm_UI.Forms.Ingredientes
                 MessageBox.Show("Por favor, seleccione una receta para modificar sus ingredientes.");
                 return;
             }
-            var context = contextFactory.CreateInstance<RecetaCantidadDbContext>(receta);
+            var context = contextFactory.CreateContext<RecetaCantidadDbContext>(receta);
             RecetaCantidadesForm form = formFactoryService.CreateForm<RecetaCantidadesForm>(context);
             form.ShowDialog();
         }

@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinForm_UI.Contracts;
 using WinForm_UI.Events;
 using WinForm_UI.Helpers;
 

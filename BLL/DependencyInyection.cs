@@ -1,19 +1,21 @@
-﻿using BLL.Compras.Contracts;
-using BLL.Compras.Services;
-using BLL.Compartido.Contracts;
+﻿using BLL.Compartido.Contracts;
 using BLL.Compartido.Services;
-using BLL.Productos.Contracts;
-using BLL.Productos.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using BLL.Insumos.Contracts;
-using BLL.Insumos.Services;
+using BLL.Compras.Contracts;
+using BLL.Compras.Services;
+using BLL.Compras.Validators;
 using BLL.Configuraciones.Contracts;
 using BLL.Configuraciones.Services;
 using BLL.Ingredientes.Contracts;
 using BLL.Ingredientes.Services;
-using BLL.Compras.Validators;
+using BLL.Insumos.Contracts;
+using BLL.Insumos.Services;
+using BLL.Productos.Contracts;
+using BLL.Productos.Services;
+using BLL.Services;
 using Entities;
+using Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace BLL
@@ -22,6 +24,8 @@ namespace BLL
     {
         public static IServiceCollection AddBLL(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddSingleton<IEventBus, EventBus>();
+            services.AddSingleton<IContextFactory, ContextFactory>();
             services.AddTransient<IUnidadDeMedidaService, UnidadDeMedidaService>();
             services.AddTransient<ITipoInsumoService, TipoInsumoService>();
             services.AddTransient<IInsumoService, InsumoService>();

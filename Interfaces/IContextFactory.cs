@@ -2,6 +2,6 @@
 {
     public interface IContextFactory
     {
-        public T CreateInstance<T>(params object[] parameters) where T : IContext;
+        public T CreateContext<T>(params object[] parameters) where T : IContext;
     }
 }

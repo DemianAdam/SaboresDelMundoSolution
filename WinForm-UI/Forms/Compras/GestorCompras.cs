@@ -78,7 +78,7 @@ namespace WinForm_UI.Forms.Compras
 
             if (MessageBox.Show("Queres agregar los detalles ahora?", "Agregar Detalles", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var context = contextFactory.CreateInstance<DetalleCompraMemoryContext>(compra);
+                var context = contextFactory.CreateContext<DetalleCompraMemoryContext>(compra);
                 DetallesCompraForm form = formFactoryService.CreateForm<DetallesCompraForm>(context);
                 this.AddOwnedForm(form);
                 form.ShowDialog();
@@ -87,7 +87,7 @@ namespace WinForm_UI.Forms.Compras
 
             if (MessageBox.Show("Queres pagar la compra ahora?", "Pagar Compra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var context = contextFactory.CreateInstance<PagoMemoryContext>(compra);
+                var context = contextFactory.CreateContext<PagoMemoryContext>(compra);
                 PagarCompraForm form = formFactoryService.CreateForm<PagarCompraForm>(context);
                 this.AddOwnedForm(form);
                 form.ShowDialog();
@@ -158,7 +158,7 @@ namespace WinForm_UI.Forms.Compras
                 return;
             }
 
-            var context = contextFactory.CreateInstance<PagoDbContext>(compra);
+            var context = contextFactory.CreateContext<PagoDbContext>(compra);
             PagarCompraForm form = new PagarCompraForm(context);
             form.ShowDialog();
         }
@@ -171,7 +171,7 @@ namespace WinForm_UI.Forms.Compras
                 MessageBox.Show("Debe seleccionar una compra para modificar los detalles.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var context = contextFactory.CreateInstance<DetalleCompraDbContext>(compra);
+            var context = contextFactory.CreateContext<DetalleCompraDbContext>(compra);
             DetallesCompraForm form = formFactoryService.CreateForm<DetallesCompraForm>(context);
             form.ShowDialog();
         }

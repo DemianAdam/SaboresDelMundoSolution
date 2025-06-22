@@ -1,5 +1,6 @@
 ﻿using BLL.Productos.Contracts;
 using Entities;
+using Interfaces;
 using System.Data;
 using WinForm_UI.Contracts;
 using WinForm_UI.Events;

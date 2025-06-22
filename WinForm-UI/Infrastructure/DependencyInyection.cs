@@ -9,14 +9,13 @@ using WinForm_UI.Productos;
 using WinForm_UI.Contracts;
 using Interfaces;
 
+
 namespace WinForm_UI.Infrastructure
 {
     public static class DependencyInyection
     {
         public static IServiceCollection AddForms(this IServiceCollection services)
         {
-            services.AddSingleton<IEventBus, EventBus>();
-            services.AddSingleton<IContextFactory, ContextFactory>();
             services.AddSingleton<IFormFactoryService, FormFactoryService>();
             services.AddSingleton<Principal>();
             return services;
