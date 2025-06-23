@@ -38,6 +38,7 @@ namespace BLL
             services.AddTransient<IRecetaService, RecetaService>();
             services.AddTransient<IRecetaCantidadService, RecetaCantidadService>();
             services.AddTransient<IDetalleCompraService, DetalleCompraService>();
+            services.AddTransient<IConversionService, ConversionService>();
 
 
             return services;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Configuraciones.Contracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,12 @@ namespace WinForm_UI.Forms.Insumos
 {
     public partial class GestorConversiones : Form
     {
-        public GestorConversiones()
+        private readonly IConversionRepository conversionRepository;
+
+        public GestorConversiones(IConversionRepository conversionRepository)
         {
             InitializeComponent();
+            this.conversionRepository = conversionRepository;
         }
     }
 }
