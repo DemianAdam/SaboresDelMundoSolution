@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using BLL.Compras.Contracts;
+using Entities;
 using Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Compras.Validators
 {
-    internal class DetalleCompraValidator : IValidator<DetalleCompra>
+    internal class DetalleCompraValidator
     {
         private readonly Compra compra;
 
@@ -16,16 +17,14 @@ namespace BLL.Compras.Validators
         {
             this.compra = compra;
         }
-        public bool Validate(DetalleCompra entity)
+        public void Validate(DetalleCompra entity)
         {
             decimal totalDetalles = compra.Detalles?.Sum(d => d.Cantidad * d.Costo) ?? 0;
 
             if (totalDetalles + entity.Costo > compra.MontoTotal)
             {
-                return false;
+                throw new ArgumentException("El total de los detalles no puede superar el monto total de la compra.", nameof(entity));
             }
-
-            return true;
         }
     }
 }

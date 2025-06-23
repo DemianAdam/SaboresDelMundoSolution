@@ -1,4 +1,5 @@
 ﻿using BLL.Compras.Contracts;
+using BLL.Compras.Validators;
 using Entities;
 using Interfaces;
 using System;
@@ -12,13 +13,13 @@ namespace BLL.Compras.Context
     public class DetalleCompraMemoryContext : IDetalleCompraContext
     {
         private readonly Compra compra;
-        private readonly IValidator<DetalleCompra> validator;
+        private readonly DetalleCompraValidator validator;
 
         public event EventHandler? OnOperationFinished;
         public DetalleCompraMemoryContext(Compra compra)
         {
             this.compra = compra;
-            this.validator = validator;
+            this.validator = new DetalleCompraValidator(compra);
         }
         public void Add(DetalleCompra detalleCompra)
         {
@@ -27,10 +28,7 @@ namespace BLL.Compras.Context
                 compra.Detalles = new List<DetalleCompra>();
             }
 
-            if (!validator.Validate(detalleCompra))
-            {
-                throw new ArgumentException("DetalleCompra is not valid.", nameof(detalleCompra));
-            }
+            validator.Validate(detalleCompra);
 
             compra.Detalles.Add(detalleCompra);
             OnOperationFinished?.Invoke(this, EventArgs.Empty);
@@ -61,7 +59,9 @@ namespace BLL.Compras.Context
             {
                 return;
             }
+            validator.Validate(detalleCompra);
             var existingDetalle = compra.Detalles.FirstOrDefault(x => x.Id == detalleCompra.Id);
+
             if (existingDetalle is not null)
             {
                 existingDetalle.Cantidad = detalleCompra.Cantidad;
