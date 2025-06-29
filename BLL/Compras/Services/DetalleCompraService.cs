@@ -52,6 +52,7 @@ namespace BLL.Compras.Services
         {
             DetalleCompraModel detalleCompraModel = detalleCompra.ToModel(compra);
             detalleCompraRepository.Insert(detalleCompraModel);
+            OnOperationFinished?.Invoke(this, EventArgs.Empty);
         }
 
         public void Remove(DetalleCompra detalleCompra)

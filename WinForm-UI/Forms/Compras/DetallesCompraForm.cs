@@ -33,7 +33,12 @@ namespace WinForm_UI.Forms.Compras
             this.eventBus = eventBus;
             this.detalleCompraContext = detalleCompraContext;
             this.eventBus.Subscribe<UnidadDeMedidaChangedEvent>(UnidadDeMedidaChanged);
-            detalleCompraContext.OnOperationFinished += (s, e) => FormHelper.UpdateControl(dgvDetalles, Detalles);
+            detalleCompraContext.OnOperationFinished += DetalleCompraContext_OnOperationFinished;
+        }
+
+        private void DetalleCompraContext_OnOperationFinished(object? sender, EventArgs e)
+        {
+            FormHelper.UpdateControl(dgvDetalles, Detalles);
         }
 
         private void UnidadDeMedidaChanged(UnidadDeMedidaChangedEvent @event)
