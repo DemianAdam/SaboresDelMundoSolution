@@ -1,6 +1,6 @@
 ﻿using DAL.Productos;
 using DAL.Productos.Models;
-using Entities;
+using Entities.Productos;
 
 namespace Mapper.Productos
 {

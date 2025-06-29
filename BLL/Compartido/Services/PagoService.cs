@@ -2,8 +2,8 @@
 using DAL.Compartido.Contracts;
 using DAL.Compartido.Models;
 using Mapper.Transacciones;
-using Entities;
 using Mapper.Compartido;
+using Entities.Transacciones;
 
 
 namespace BLL.Compartido.Services

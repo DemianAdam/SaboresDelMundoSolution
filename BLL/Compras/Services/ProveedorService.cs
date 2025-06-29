@@ -1,7 +1,7 @@
 ﻿using BLL.Compras.Contracts;
 using DAL.Compra;
 using DAL.Compra.Models;
-using Entities;
+using Entities.Transacciones.Compras;
 using Mapper.Transacciones.Compras;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
 ﻿using DAL.Insumos.Models;
-using Entities;
+using Entities.Insumos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,7 @@
-﻿namespace Entities
+﻿using Entities.Productos;
+using Entities.Transacciones;
+
+namespace Entities.Transacciones.Ventas
 {
     public class Venta : Transaccion
     {

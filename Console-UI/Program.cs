@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
-using Entities;
 using DAL;
 using BLL;
 using BLL.Productos.Contracts;
+using Entities.Productos;
 namespace Console_UI
 {
     internal class Program

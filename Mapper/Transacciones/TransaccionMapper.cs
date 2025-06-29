@@ -1,5 +1,7 @@
 ﻿using DAL.Compartido.Models;
-using Entities;
+using Entities.Transacciones;
+using Entities.Transacciones.Compras;
+using Entities.Transacciones.Ventas;
 using Mapper.Transacciones.Compras;
 using System;
 using System.Collections.Generic;

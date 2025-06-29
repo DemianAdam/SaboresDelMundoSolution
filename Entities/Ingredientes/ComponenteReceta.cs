@@ -1,4 +1,4 @@
-﻿namespace Entities
+﻿namespace Entities.Ingredientes
 {
     public abstract class ComponenteReceta : ICloneable<ComponenteReceta>
     {

@@ -6,7 +6,7 @@ using DAL.Ingredientes.Contracts;
 using DAL.Ingredientes.Models;
 using DAL.Insumos;
 using DAL.Insumos.Models;
-using Entities;
+using Entities.Ingredientes;
 using Mapper.Ingredientes;
 using System;
 using System.Collections.Generic;

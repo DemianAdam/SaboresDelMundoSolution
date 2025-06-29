@@ -1,5 +1,5 @@
 ﻿using BLL.Compras.Contracts;
-using Entities;
+using Entities.Transacciones.Compras;
 using Interfaces;
 using System;
 using System.Collections.Generic;

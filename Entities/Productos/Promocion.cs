@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities
+namespace Entities.Productos
 {
     public class Promocion : Producto
     {
@@ -13,12 +13,12 @@ namespace Entities
         {
             return new Promocion
             {
-                Id = this.Id,
-                Nombre = this.Nombre,
-                Precio = this.Precio,
-                Tipo = this.Tipo.Clone(),
-                SubProductos = this.SubProductos?.Select(sp => sp.Clone()).ToList(),
-                CantidadTipoProductos = this.CantidadTipoProductos?.Select(ctp => ctp.Clone()).ToList()
+                Id = Id,
+                Nombre = Nombre,
+                Precio = Precio,
+                Tipo = Tipo.Clone(),
+                SubProductos = SubProductos?.Select(sp => sp.Clone()).ToList(),
+                CantidadTipoProductos = CantidadTipoProductos?.Select(ctp => ctp.Clone()).ToList()
 
             };
         }

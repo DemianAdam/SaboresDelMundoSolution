@@ -5,7 +5,7 @@ using DAL.Ingredientes.Models;
 using DAL.Insumos;
 using DAL.Insumos.Contracts;
 using DAL.Insumos.Models;
-using Entities;
+using Entities.Insumos;
 using Mapper.Ingredientes;
 using Mapper.Insumos;
 using System;

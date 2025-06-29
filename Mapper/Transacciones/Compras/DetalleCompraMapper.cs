@@ -1,7 +1,7 @@
 ﻿using DAL.Compra.Models;
 using DAL.Configuraciones.Models;
 using DAL.Insumos.Models;
-using Entities;
+using Entities.Transacciones.Compras;
 using Mapper.Configuraciones;
 using Mapper.Insumos;
 using System;

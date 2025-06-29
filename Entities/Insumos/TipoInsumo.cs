@@ -1,4 +1,4 @@
-﻿namespace Entities
+﻿namespace Entities.Insumos
 {
     public class TipoInsumo
     {

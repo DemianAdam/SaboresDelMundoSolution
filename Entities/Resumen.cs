@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Entities.Transacciones.Compras;
+using Entities.Transacciones.Ventas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

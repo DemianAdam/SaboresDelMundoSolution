@@ -1,7 +1,9 @@
 ﻿using BLL.Compras.Contracts;
 using BLL.Configuraciones.Contracts;
 using BLL.Insumos.Contracts;
-using Entities;
+using Entities.Configuraciones;
+using Entities.Insumos;
+using Entities.Transacciones.Compras;
 using Interfaces;
 using System;
 using System.Collections.Generic;

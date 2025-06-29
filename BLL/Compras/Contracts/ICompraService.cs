@@ -1,4 +1,4 @@
-﻿using Entities;
+﻿using Entities.Transacciones.Compras;
 using System;
 using System.Collections.Generic;
 using System.Linq;

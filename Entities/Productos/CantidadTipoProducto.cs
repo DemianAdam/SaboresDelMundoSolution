@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities
+namespace Entities.Productos
 {
     public class CantidadTipoProducto : ICloneable<CantidadTipoProducto>
     {
@@ -15,8 +15,8 @@ namespace Entities
         {
             return new CantidadTipoProducto
             {
-                TipoProducto = this.TipoProducto.Clone(),
-                Cantidad = this.Cantidad
+                TipoProducto = TipoProducto.Clone(),
+                Cantidad = Cantidad
             };
         }
     }

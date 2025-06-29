@@ -1,7 +1,7 @@
 ﻿using BLL.Configuraciones.Contracts;
 using DAL.Configuraciones.Contracts;
 using DAL.Configuraciones.Models;
-using Entities;
+using Entities.Configuraciones;
 using Mapper.Configuraciones;
 using System;
 using System.Collections.Generic;

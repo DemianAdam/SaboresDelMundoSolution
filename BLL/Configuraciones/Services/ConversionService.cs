@@ -3,7 +3,7 @@ using DAL.Configuraciones.Contracts;
 using DAL.Configuraciones.Models;
 using DAL.Insumos;
 using DAL.Insumos.Models;
-using Entities;
+using Entities.Configuraciones;
 using Mapper.Configuraciones;
 using System;
 using System.Collections.Generic;

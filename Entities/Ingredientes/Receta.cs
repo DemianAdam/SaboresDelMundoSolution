@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Entities.Configuraciones;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities
+namespace Entities.Ingredientes
 {
     public class Receta : ComponenteReceta
     {
@@ -27,12 +28,12 @@ namespace Entities
         {
             return new Receta
             {
-                Id = this.Id,
-                Nombre = this.Nombre,
-                Descripcion = this.Descripcion,
-                CantidadIngredientes = this.CantidadIngredientes?.Select(ci => ci.Clone()).ToList(),
-                UnidadDeMedida = this.UnidadDeMedida.Clone(),
-                PesoAproximado = this.PesoAproximado,
+                Id = Id,
+                Nombre = Nombre,
+                Descripcion = Descripcion,
+                CantidadIngredientes = CantidadIngredientes?.Select(ci => ci.Clone()).ToList(),
+                UnidadDeMedida = UnidadDeMedida.Clone(),
+                PesoAproximado = PesoAproximado,
             };
         }
 
@@ -71,7 +72,7 @@ namespace Entities
             if (CantidadIngredientes is null || CantidadIngredientes.Count == 0)
                 return false;
             return CantidadIngredientes.Any(ci => ci.ComponenteReceta.Id == receta.Id ||
-                                                   (ci.ComponenteReceta is Receta r && r.TieneReceta(receta)));
+                                                   ci.ComponenteReceta is Receta r && r.TieneReceta(receta));
         }
     }
 }

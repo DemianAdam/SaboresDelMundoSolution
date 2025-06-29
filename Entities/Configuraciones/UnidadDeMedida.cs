@@ -1,5 +1,4 @@
-﻿
-namespace Entities
+﻿namespace Entities.Configuraciones
 {
     public class UnidadDeMedida : ICloneable<UnidadDeMedida>
     {
@@ -15,8 +14,8 @@ namespace Entities
         {
             return new UnidadDeMedida
             {
-                Id = this.Id,
-                Unidad = this.Unidad
+                Id = Id,
+                Unidad = Unidad
             };
         }
     }

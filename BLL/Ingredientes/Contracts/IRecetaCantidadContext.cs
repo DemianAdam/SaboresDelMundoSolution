@@ -1,4 +1,4 @@
-﻿using Entities;
+﻿using Entities.Ingredientes;
 using Interfaces;
 
 namespace BLL.Ingredientes.Contracts

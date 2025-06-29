@@ -1,5 +1,5 @@
 ﻿using DAL.Insumos.Models;
-using Entities;
+using Entities.Insumos;
 
 namespace Mapper.Insumos
 {

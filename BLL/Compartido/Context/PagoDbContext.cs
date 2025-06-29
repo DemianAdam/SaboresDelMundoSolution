@@ -1,5 +1,5 @@
 ﻿using BLL.Compartido.Contracts;
-using Entities;
+using Entities.Transacciones;
 using System;
 using System.Collections.Generic;
 using System.Linq;

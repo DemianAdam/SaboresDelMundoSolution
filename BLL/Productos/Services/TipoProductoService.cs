@@ -1,6 +1,6 @@
 ﻿using BLL.Productos.Contracts;
 using DAL.Productos;
-using Entities;
+using Entities.Productos;
 using Mapper;
 using Mapper.Productos;
 using System;

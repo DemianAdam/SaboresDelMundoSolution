@@ -1,6 +1,7 @@
 ﻿using BLL.Configuraciones.Contracts;
 using BLL.Ingredientes.Contracts;
-using Entities;
+using Entities.Configuraciones;
+using Entities.Ingredientes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

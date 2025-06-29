@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Entities.Configuraciones;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities
+namespace Entities.Ingredientes
 {
     public class CantidadIngrediente : ICloneable<CantidadIngrediente>
     {
@@ -32,12 +33,12 @@ namespace Entities
         {
             return new CantidadIngrediente
             {
-                Id = this.Id,
-                ComponenteReceta = this.ComponenteReceta.Clone(),
-                Cantidad = this.Cantidad,
-                UnidadDeMedida = this.UnidadDeMedida.Clone(),
-                DesperdicioAceptado = this.DesperdicioAceptado,
-                Costo = this.Costo
+                Id = Id,
+                ComponenteReceta = ComponenteReceta.Clone(),
+                Cantidad = Cantidad,
+                UnidadDeMedida = UnidadDeMedida.Clone(),
+                DesperdicioAceptado = DesperdicioAceptado,
+                Costo = Costo
             };
         }
         public override string ToString()

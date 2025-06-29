@@ -1,4 +1,4 @@
-﻿using Entities;
+﻿using Entities.Productos;
 using Interfaces;
 using System;
 using System.Collections.Generic;

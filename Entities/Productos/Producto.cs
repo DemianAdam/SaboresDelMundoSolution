@@ -1,4 +1,4 @@
-﻿namespace Entities
+﻿namespace Entities.Productos
 {
     public class Producto : ICloneable<Producto>
     {
@@ -19,11 +19,11 @@
         {
             return new Producto
             {
-                Id = this.Id,
-                Nombre = this.Nombre,
-                Precio = this.Precio,
-                Tipo = this.Tipo.Clone(),
-                SubProductos = this.SubProductos?.Select(sp => sp.Clone()).ToList()
+                Id = Id,
+                Nombre = Nombre,
+                Precio = Precio,
+                Tipo = Tipo.Clone(),
+                SubProductos = SubProductos?.Select(sp => sp.Clone()).ToList()
             };
         }
     }

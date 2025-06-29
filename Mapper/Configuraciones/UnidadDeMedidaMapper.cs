@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Configuraciones.Models;
-using Entities;
+using Entities.Configuraciones;
 
 namespace Mapper.Configuraciones
 {

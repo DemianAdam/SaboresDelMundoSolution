@@ -1,7 +1,8 @@
 ﻿using BLL.Configuraciones.Contracts;
 using BLL.Insumos.Contracts;
 using DAL.Configuraciones.Contracts;
-using Entities;
+using Entities.Configuraciones;
+using Entities.Insumos;
 using WinForm_UI.Contracts;
 using WinForm_UI.Helpers;
 

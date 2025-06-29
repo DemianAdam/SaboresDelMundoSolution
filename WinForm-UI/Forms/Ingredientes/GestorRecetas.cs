@@ -2,7 +2,8 @@
 using BLL.Configuraciones.Contracts;
 using BLL.Ingredientes.Context;
 using BLL.Ingredientes.Contracts;
-using Entities;
+using Entities.Configuraciones;
+using Entities.Ingredientes;
 using Interfaces;
 using System;
 using System.Collections.Generic;

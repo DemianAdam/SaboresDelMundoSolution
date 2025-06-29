@@ -1,6 +1,7 @@
 ﻿using DAL.Configuraciones.Models;
 using DAL.Insumos.Models;
-using Entities;
+using Entities.Configuraciones;
+using Entities.Insumos;
 using Mapper.Insumos;
 using System;
 using System.Collections.Generic;

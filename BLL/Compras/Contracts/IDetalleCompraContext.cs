@@ -1,4 +1,4 @@
-﻿using Entities;
+﻿using Entities.Transacciones.Compras;
 using Interfaces;
 
 namespace BLL.Compras.Contracts

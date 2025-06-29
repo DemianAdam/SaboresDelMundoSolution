@@ -7,7 +7,7 @@ using DAL.Compartido.Models;
 using DAL.Compra.Models;
 using DAL.Configuraciones.Models;
 using DAL.Insumos.Models;
-using Entities;
+using Entities.Transacciones.Compras;
 using Mapper.Compartido;
 
 namespace Mapper.Transacciones.Compras

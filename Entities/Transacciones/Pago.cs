@@ -1,4 +1,4 @@
-﻿namespace Entities
+﻿namespace Entities.Transacciones
 {
     public class Pago
     {

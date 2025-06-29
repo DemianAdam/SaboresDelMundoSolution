@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities
+namespace Entities.Ingredientes
 {
     public class Ingrediente :ComponenteReceta
     {
@@ -12,9 +12,9 @@ namespace Entities
         {
             return new Ingrediente
             {
-                Id = this.Id,
-                Nombre = this.Nombre,
-                Descripcion = this.Descripcion,
+                Id = Id,
+                Nombre = Nombre,
+                Descripcion = Descripcion,
             };
         }
     }

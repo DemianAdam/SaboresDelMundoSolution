@@ -1,5 +1,5 @@
 ﻿using BLL.Ingredientes.Contracts;
-using Entities;
+using Entities.Ingredientes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

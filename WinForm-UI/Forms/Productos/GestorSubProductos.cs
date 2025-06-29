@@ -1,6 +1,6 @@
 ﻿using BLL;
 using BLL.Productos.Contracts;
-using Entities;
+using Entities.Productos;
 using Mapper.Productos;
 using System;
 using System.Collections.Generic;

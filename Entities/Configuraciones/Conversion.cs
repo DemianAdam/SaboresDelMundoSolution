@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Entities.Insumos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities
+namespace Entities.Configuraciones
 {
     public class Conversion
     {

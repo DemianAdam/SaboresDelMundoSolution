@@ -1,4 +1,4 @@
-﻿using Entities;
+﻿using Entities.Transacciones;
 using Interfaces;
 
 namespace BLL.Compartido.Contracts

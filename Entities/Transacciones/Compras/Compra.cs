@@ -1,4 +1,4 @@
-﻿namespace Entities
+﻿namespace Entities.Transacciones.Compras
 {
     public class Compra : Transaccion
     {

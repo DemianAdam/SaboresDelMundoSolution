@@ -1,9 +1,9 @@
 ﻿using BLL.Insumos.Contracts;
-using Entities;
 using DAL.Insumos.Contracts;
 using DAL.Insumos.Models;
 using Mapper.Insumos;
 using DAL.Insumos;
+using Entities.Insumos;
 
 namespace BLL.Insumos.Services
 {

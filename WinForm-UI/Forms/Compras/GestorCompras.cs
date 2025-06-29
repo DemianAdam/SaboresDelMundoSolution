@@ -1,6 +1,5 @@
 ﻿using BLL.Compras.Contracts;
 using BLL.Compartido.Context;
-using Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +15,7 @@ using WinForm_UI.Contracts;
 using System.Diagnostics;
 using WinForm_UI.Events;
 using Interfaces;
+using Entities.Transacciones.Compras;
 
 namespace WinForm_UI.Forms.Compras
 {
