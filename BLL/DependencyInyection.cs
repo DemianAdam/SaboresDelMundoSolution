@@ -34,7 +34,6 @@ namespace BLL
             services.AddTransient<IPagoService, PagoService>();
             services.AddTransient<IProductoService, ProductoService>();
             services.AddTransient<ITipoProductoService, TipoProductoService>();
-            services.AddTransient<IIngredienteService, IngredienteService>();
             services.AddTransient<IRecetaService, RecetaService>();
             services.AddTransient<IRecetaCantidadService, RecetaCantidadService>();
             services.AddTransient<IDetalleCompraService, DetalleCompraService>();

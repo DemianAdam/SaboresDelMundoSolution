@@ -13,6 +13,5 @@ namespace DAL.Insumos.Models
         public string Nombre { get; set; } = null!;
         public string? Descripcion { get; set; }
         public int TipoInsumoId { get; set; }
-        public IngredienteModel? IngredienteModel { get; set; } = null;
     }
 }

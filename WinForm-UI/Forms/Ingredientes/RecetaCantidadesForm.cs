@@ -22,7 +22,7 @@ namespace WinForm_UI.Forms.Ingredientes
         private readonly IUnidadDeMedidaService unidadDeMedidaService;
 
         public List<CantidadIngrediente> CantidadIngredientes { get => recetaCantidadContext.GetAll(); }
-        public List<Ingrediente> IngredientesDisponibles { get => recetaService.GetAvailableIngredientes(recetaCantidadContext.Receta); }
+        public List<ComponenteReceta> ComponentesDisponibles { get => recetaService.GetAvailableIngredientes(recetaCantidadContext.Receta); }
         public RecetaCantidadesForm(IRecetaService recetaService, IRecetaCantidadContext recetaCantidadContext, IUnidadDeMedidaService unidadDeMedidaService)
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace WinForm_UI.Forms.Ingredientes
         private void RecetaCantidadesForm_Load(object sender, EventArgs e)
         {
             FormHelper.UpdateControl(dgvIngredientes, CantidadIngredientes);
-            FormHelper.UpdateControl(cmbIngredientes, IngredientesDisponibles, nameof(Ingrediente.ToString));
+            FormHelper.UpdateControl(cmbComponenteReceta, ComponentesDisponibles, nameof(Component.ToString));
             FormHelper.UpdateControl(cmbUnidadDeMedida, unidadDeMedidaService, nameof(UnidadDeMedida.Unidad));
         }
 
@@ -52,21 +52,24 @@ namespace WinForm_UI.Forms.Ingredientes
 
         public CantidadIngrediente? GetObjectFromInputs(int id = -1)
         {
-            Ingrediente? ingrediente = cmbIngredientes.GetSelected<Ingrediente>();
+            ComponenteReceta? componenteReceta = cmbComponenteReceta.GetSelected<ComponenteReceta>();
             UnidadDeMedida? unidadDeMedida = cmbUnidadDeMedida.GetSelected<UnidadDeMedida>();
-            if (ingrediente is null || unidadDeMedida is null)
+            if (componenteReceta is null || unidadDeMedida is null)
             {
-                MessageBox.Show("Debe seleccionar un ingrediente y una unidad de medida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Debe seleccionar un componenteReceta y una unidad de medida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
             CantidadIngrediente cantidadIngrediente = new CantidadIngrediente
             {
                 Id = id,
-                Ingrediente = ingrediente.Clone(),
+                ComponenteReceta = componenteReceta.Clone(),
                 Cantidad = nudCantidad.Value,
                 UnidadDeMedida = unidadDeMedida.Clone(),
-                DesperdicioAceptado = nudDesperdicioAceptado.Value
+                DesperdicioAceptado = nudDesperdicioAceptado.Value,
+                Costo = componenteReceta is Receta receta
+                    ? receta.CostoUnitario * nudCantidad.Value
+                    : 0 // Assuming costo is calculated differently for other types of ComponenteReceta
             };
 
             return cantidadIngrediente;
@@ -77,7 +80,7 @@ namespace WinForm_UI.Forms.Ingredientes
             CantidadIngrediente? cantidadIngrediente = dgvIngredientes.GetSelected<CantidadIngrediente>();
             if (cantidadIngrediente is null)
             {
-                MessageBox.Show("Debe seleccionar una cantidad de ingrediente para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Debe seleccionar una cantidad de componenteReceta para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             recetaCantidadContext.Remove(cantidadIngrediente);
@@ -88,7 +91,7 @@ namespace WinForm_UI.Forms.Ingredientes
             CantidadIngrediente? cantidadIngrediente = dgvIngredientes.GetSelected<CantidadIngrediente>();
             if (cantidadIngrediente is null)
             {
-                MessageBox.Show("Debe seleccionar una cantidad de ingrediente para modificar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Debe seleccionar una cantidad de componenteReceta para modificar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             CantidadIngrediente? updatedCantidad = GetObjectFromInputs(cantidadIngrediente.Id);

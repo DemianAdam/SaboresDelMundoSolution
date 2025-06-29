@@ -6,24 +6,16 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class Ingrediente : ICloneable<Ingrediente>
+    public class Ingrediente :ComponenteReceta
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; } = null!;
-        public string? Descripcion { get; set; }
-
-        public virtual Ingrediente Clone()
+        public override Ingrediente Clone()
         {
             return new Ingrediente
             {
                 Id = this.Id,
                 Nombre = this.Nombre,
-                Descripcion = this.Descripcion
+                Descripcion = this.Descripcion,
             };
-        }
-        public override string ToString()
-        {
-            return $"{Nombre}{(string.IsNullOrEmpty(Descripcion) ? string.Empty : $" ({Descripcion})")}";
         }
     }
 }

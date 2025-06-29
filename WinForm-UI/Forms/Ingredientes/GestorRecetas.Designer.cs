@@ -37,7 +37,12 @@
             this.txtDescripcion = new TextBox();
             this.label1 = new Label();
             this.label2 = new Label();
+            this.cmbUnidadDeMedida = new ComboBox();
+            this.nudPesoAproximado = new NumericUpDown();
+            this.label3 = new Label();
+            this.label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)this.dgvRecetas).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)this.nudPesoAproximado).BeginInit();
             SuspendLayout();
             // 
             // dgvRecetas
@@ -46,12 +51,12 @@
             this.dgvRecetas.Dock = DockStyle.Bottom;
             this.dgvRecetas.Location = new Point(0, 101);
             this.dgvRecetas.Name = "dgvRecetas";
-            this.dgvRecetas.Size = new Size(411, 280);
+            this.dgvRecetas.Size = new Size(551, 280);
             this.dgvRecetas.TabIndex = 0;
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new Point(323, 13);
+            this.btnModificar.Location = new Point(461, 11);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new Size(78, 52);
             this.btnModificar.TabIndex = 15;
@@ -61,7 +66,7 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new Point(239, 12);
+            this.btnEliminar.Location = new Point(377, 10);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new Size(78, 52);
             this.btnEliminar.TabIndex = 14;
@@ -71,7 +76,7 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new Point(155, 12);
+            this.btnAgregar.Location = new Point(293, 10);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new Size(78, 52);
             this.btnAgregar.TabIndex = 13;
@@ -81,7 +86,7 @@
             // 
             // btnModificarIngredientes
             // 
-            this.btnModificarIngredientes.Location = new Point(155, 70);
+            this.btnModificarIngredientes.Location = new Point(293, 68);
             this.btnModificarIngredientes.Name = "btnModificarIngredientes";
             this.btnModificarIngredientes.Size = new Size(246, 23);
             this.btnModificarIngredientes.TabIndex = 16;
@@ -121,11 +126,50 @@
             this.label2.TabIndex = 19;
             this.label2.Text = "Descripcion";
             // 
+            // cmbUnidadDeMedida
+            // 
+            this.cmbUnidadDeMedida.FormattingEnabled = true;
+            this.cmbUnidadDeMedida.Location = new Point(138, 27);
+            this.cmbUnidadDeMedida.Name = "cmbUnidadDeMedida";
+            this.cmbUnidadDeMedida.Size = new Size(121, 23);
+            this.cmbUnidadDeMedida.TabIndex = 20;
+            // 
+            // nudPesoAproximado
+            // 
+            this.nudPesoAproximado.DecimalPlaces = 2;
+            this.nudPesoAproximado.Location = new Point(138, 70);
+            this.nudPesoAproximado.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
+            this.nudPesoAproximado.Name = "nudPesoAproximado";
+            this.nudPesoAproximado.Size = new Size(120, 23);
+            this.nudPesoAproximado.TabIndex = 21;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new Point(138, 12);
+            this.label3.Name = "label3";
+            this.label3.Size = new Size(105, 15);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Unidad De Medida";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new Point(138, 53);
+            this.label4.Name = "label4";
+            this.label4.Size = new Size(101, 15);
+            this.label4.TabIndex = 23;
+            this.label4.Text = "Peso Aproximado";
+            // 
             // GestorRecetas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(411, 381);
+            ClientSize = new Size(551, 381);
+            Controls.Add(this.label4);
+            Controls.Add(this.label3);
+            Controls.Add(this.nudPesoAproximado);
+            Controls.Add(this.cmbUnidadDeMedida);
             Controls.Add(this.label2);
             Controls.Add(this.label1);
             Controls.Add(this.txtDescripcion);
@@ -139,6 +183,7 @@
             Text = "GestorRecetas";
             Load += GestorRecetas_Load;
             ((System.ComponentModel.ISupportInitialize)this.dgvRecetas).EndInit();
+            ((System.ComponentModel.ISupportInitialize)this.nudPesoAproximado).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -154,5 +199,9 @@
         private TextBox txtDescripcion;
         private Label label1;
         private Label label2;
+        private ComboBox cmbUnidadDeMedida;
+        private NumericUpDown nudPesoAproximado;
+        private Label label3;
+        private Label label4;
     }
 }

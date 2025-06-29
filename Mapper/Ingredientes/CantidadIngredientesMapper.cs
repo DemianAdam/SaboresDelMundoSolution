@@ -1,5 +1,6 @@
 ﻿using DAL.Configuraciones.Models;
 using DAL.Ingredientes.Models;
+using DAL.Insumos.Models;
 using Entities;
 using Mapper.Configuraciones;
 using System;
@@ -22,26 +23,26 @@ namespace Mapper.Ingredientes
             {
                 Id = cantidadIngrediente.Id,
                 RecetaId = receta.Id,
-                IngredienteId = cantidadIngrediente.Ingrediente.Id,
+                ComponenteRecetaId = cantidadIngrediente.ComponenteReceta.Id,
                 UnidadDeMedidaId = cantidadIngrediente.UnidadDeMedida.Id,
                 Cantidad = cantidadIngrediente.Cantidad,
                 DesperdicioAceptado = cantidadIngrediente.DesperdicioAceptado
             };
         }
-        public static List<CantidadIngrediente> ToCantidadIngredientes(this List<RecetaCantidadIngredienteModel> cantidadIngredienteModels, List<IngredienteModel> ingredienteModels, List<UnidadDeMedidaModel> unidadDeMedidaModels, List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels)
+        public static List<CantidadIngrediente> ToCantidadIngredientes(this List<RecetaCantidadIngredienteModel> cantidadIngredienteModels, List<ComponenteRecetaModel> componenteRecetaModel, List<UnidadDeMedidaModel> unidadDeMedidaModels, List<InsumoModel> insumoModel, List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels, List<IngredienteModel> ingredienteModels)
         {
-            return cantidadIngredienteModels.Select(c => c.ToCantidadIngrediente(ingredienteModels, unidadDeMedidaModels, recetaCantidadIngredienteModels)).ToList();
+            return cantidadIngredienteModels.Select(c => c.ToCantidadIngrediente(componenteRecetaModel, unidadDeMedidaModels, insumoModel, recetaCantidadIngredienteModels, ingredienteModels)).ToList();
         }
-        public static CantidadIngrediente ToCantidadIngrediente(this RecetaCantidadIngredienteModel cantidadIngredienteModel, List<IngredienteModel> ingredienteModels, List<UnidadDeMedidaModel> unidadDeMedidaModels, List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels)
+        public static CantidadIngrediente ToCantidadIngrediente(this RecetaCantidadIngredienteModel cantidadIngredienteModel, List<ComponenteRecetaModel> componenteRecetaModel, List<UnidadDeMedidaModel> unidadDeMedidaModels, List<InsumoModel> insumoModels, List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels, List<IngredienteModel> ingredienteModels)
         {
 
-            Ingrediente? ingrediente = ingredienteModels.FirstOrDefault(i => i.Id == cantidadIngredienteModel.IngredienteId)?.ToIngrediente(recetaCantidadIngredienteModels, ingredienteModels, unidadDeMedidaModels);
+            ComponenteReceta? componenteReceta = componenteRecetaModel.FirstOrDefault(i => i.ComponenteRecetaId == cantidadIngredienteModel.ComponenteRecetaId)?.ToComponenteReceta(insumoModels, recetaCantidadIngredienteModels, componenteRecetaModel, unidadDeMedidaModels, ingredienteModels);
 
             UnidadDeMedida? unidadDeMedida = unidadDeMedidaModels.FirstOrDefault(u => u.Id == cantidadIngredienteModel.UnidadDeMedidaId)?.ToUnidadDeMedida();
 
-            if (ingrediente == null)
+            if (componenteReceta == null)
             {
-                throw new ArgumentException($"No se encontró el ingrediente con ID {cantidadIngredienteModel.IngredienteId}");
+                throw new ArgumentException($"No se encontró el componenteReceta con ID {cantidadIngredienteModel.ComponenteRecetaId}");
             }
 
             if (unidadDeMedida == null)
@@ -49,13 +50,16 @@ namespace Mapper.Ingredientes
                 throw new ArgumentException($"No se encontró la unidad de medida con ID {cantidadIngredienteModel.UnidadDeMedidaId}");
             }
 
+            decimal costo = cantidadIngredienteModel.Costo??0;
+
             CantidadIngrediente cantidadIngrediente = new CantidadIngrediente
             {
                 Id = cantidadIngredienteModel.Id,
                 Cantidad = cantidadIngredienteModel.Cantidad,
-                Ingrediente = ingrediente,
+                ComponenteReceta = componenteReceta,
                 UnidadDeMedida = unidadDeMedida,
-                DesperdicioAceptado = cantidadIngredienteModel.DesperdicioAceptado
+                DesperdicioAceptado = cantidadIngredienteModel.DesperdicioAceptado,
+                Costo = costo,
             };
 
             return cantidadIngrediente;

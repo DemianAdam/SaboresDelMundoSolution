@@ -19,7 +19,7 @@ namespace BLL.Compras.Validators
         }
         public void Validate(DetalleCompra entity)
         {
-            decimal totalDetalles = compra.Detalles?.Sum(d => d.Cantidad * d.Costo) ?? 0;
+            decimal totalDetalles = compra.Detalles?.Sum(d => d.Costo) ?? 0;
 
             if (totalDetalles + entity.Costo > compra.MontoTotal)
             {

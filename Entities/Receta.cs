@@ -6,9 +6,22 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class Receta : Ingrediente
+    public class Receta : ComponenteReceta
     {
         public List<CantidadIngrediente>? CantidadIngredientes { get; set; }
+        public required UnidadDeMedida UnidadDeMedida { get; set; }
+        public required decimal PesoAproximado { get; set; }
+        public decimal Costo { get => CantidadIngredientes?.Sum(x => x.Costo)??0;}
+
+        public decimal CostoUnitario
+        {
+            get
+            {
+                if (PesoAproximado <= 0)
+                    return 0;
+                return Costo / PesoAproximado;
+            }
+        }
 
         public override Receta Clone()
         {
@@ -18,6 +31,8 @@ namespace Entities
                 Nombre = this.Nombre,
                 Descripcion = this.Descripcion,
                 CantidadIngredientes = this.CantidadIngredientes?.Select(ci => ci.Clone()).ToList(),
+                UnidadDeMedida = this.UnidadDeMedida.Clone(),
+                PesoAproximado = this.PesoAproximado,
             };
         }
 
@@ -27,7 +42,7 @@ namespace Entities
             {
                 return false;
             }
-            CantidadIngredientes = CantidadIngredientes.FindAll(ci => ci.Ingrediente.Id != ingrediente.Id);
+            CantidadIngredientes = CantidadIngredientes.FindAll(ci => ci.ComponenteReceta.Id != ingrediente.Id);
             return true;
         }
 
@@ -38,7 +53,7 @@ namespace Entities
                 return;
             }
             CantidadIngrediente? findedCantidadIngrediente = CantidadIngredientes
-                            .FirstOrDefault(ci => ci.Ingrediente.Id == cantidadIngrediente.Ingrediente.Id);
+                            .FirstOrDefault(ci => ci.ComponenteReceta.Id == cantidadIngrediente.ComponenteReceta.Id);
             if (findedCantidadIngrediente is null)
             {
                 CantidadIngredientes.Add(cantidadIngrediente.Clone());
@@ -55,8 +70,8 @@ namespace Entities
         {
             if (CantidadIngredientes is null || CantidadIngredientes.Count == 0)
                 return false;
-            return CantidadIngredientes.Any(ci => ci.Ingrediente.Id == receta.Id || 
-                                                   (ci.Ingrediente is Receta r && r.TieneReceta(receta)));
+            return CantidadIngredientes.Any(ci => ci.ComponenteReceta.Id == receta.Id ||
+                                                   (ci.ComponenteReceta is Receta r && r.TieneReceta(receta)));
         }
     }
 }

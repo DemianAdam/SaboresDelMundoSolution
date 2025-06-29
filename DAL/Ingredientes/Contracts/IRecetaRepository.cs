@@ -9,6 +9,9 @@ namespace DAL.Ingredientes.Contracts
 {
     public interface IRecetaRepository
     {
-        List<IngredienteModel> GetAll();
+        List<RecetaModel> GetAll();
+        void Insert(RecetaModel recetaModel);
+        void Remove(RecetaModel recetaModel);
+        void Update(RecetaModel recetaModel);
     }
 }

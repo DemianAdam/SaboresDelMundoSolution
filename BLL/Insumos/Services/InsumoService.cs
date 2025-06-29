@@ -43,16 +43,6 @@ namespace BLL.Insumos.Services
             {
                 throw new Exception("El insumo ya existe en la base de datos.");
             }
-            if (insumo.Tipo.Tipo == "Ingrediente")
-            {
-                Ingrediente ingrediente = new Ingrediente
-                {
-                    Nombre = insumoModel.Nombre,
-                    Descripcion = insumoModel.Descripcion,
-                };
-                IngredienteModel ingredienteModel = ingrediente.ToModel();
-                insumoModel.IngredienteModel = ingredienteModel;
-            }
             insumoUnitOfWork.Insert(insumoModel);
             OnOperationFinished?.Invoke(this, EventArgs.Empty);
         }

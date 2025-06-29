@@ -39,7 +39,7 @@ namespace DAL.Ingredientes.Repositories
             connection.Execute(spInsertRecetaCantidadIngrediente, new
             {
                 recetaId = recetaCantidadIngrediente.RecetaId,
-                ingredienteId = recetaCantidadIngrediente.IngredienteId,
+                componenteRecetaId = recetaCantidadIngrediente.ComponenteRecetaId,
                 unidadDeMedidaId = recetaCantidadIngrediente.UnidadDeMedidaId,
                 cantidad = recetaCantidadIngrediente.Cantidad,
                 desperdicioAceptado = recetaCantidadIngrediente.DesperdicioAceptado
@@ -88,10 +88,10 @@ namespace DAL.Ingredientes.Repositories
             {
                 id = recetaCantidadIngrediente.Id,
                 recetaId = recetaCantidadIngrediente.RecetaId,
-                ingredienteId = recetaCantidadIngrediente.IngredienteId,
+                componenteRecetaId = recetaCantidadIngrediente.ComponenteRecetaId,
                 unidadDeMedidaId = recetaCantidadIngrediente.UnidadDeMedidaId,
                 cantidad = recetaCantidadIngrediente.Cantidad,
-                desperdicioAceptado = recetaCantidadIngrediente.DesperdicioAceptado
+                desperdicioAceptado = recetaCantidadIngrediente.DesperdicioAceptado,
             }, commandType: CommandType.StoredProcedure, transaction: sqlTransaction);
         }
     }

@@ -42,7 +42,7 @@ namespace DAL.Ingredientes
             try
             {
                 ingredienteRepository.Insert(ingrediente, sqlConnection, sqlTransaction);
-                recetaCantidadIngredienteRepository.RemoveByRecetaId(ingrediente.Id, sqlConnection, sqlTransaction);
+                recetaCantidadIngredienteRepository.RemoveByRecetaId(ingrediente.ComponenteRecetaId, sqlConnection, sqlTransaction);
                 if (recetaCantidadIngredienteModels is not null)
                 {
                     foreach (var item in recetaCantidadIngredienteModels)
@@ -67,42 +67,6 @@ namespace DAL.Ingredientes
 
         }
 
-        public void Remove(IngredienteModel ingrediente)
-        {
-            using SqlConnection sqlConnection = new SqlConnection(_connectionString);
-            ingredienteRepository.Remove(ingrediente, sqlConnection);
-        }
-
-        public void Update(IngredienteModel ingrediente, List<RecetaCantidadIngredienteModel>? recetaCantidadIngredienteModels = null)
-        {
-            using SqlConnection sqlConnection = new SqlConnection(_connectionString);
-            sqlConnection.Open();
-            using SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
-            try
-            {
-                ingredienteRepository.Update(ingrediente, sqlConnection, sqlTransaction);
-
-                if (recetaCantidadIngredienteModels is not null)
-                {
-                    foreach (var item in recetaCantidadIngredienteModels)
-                    {
-                        recetaCantidadIngredienteRepository.Insert(item, sqlConnection, sqlTransaction);
-                    }
-                }
-                sqlTransaction.Commit();
-            }
-            catch (Exception)
-            {
-                sqlTransaction.Rollback();
-                throw;
-            }
-            finally
-            {
-                if (sqlConnection.State == System.Data.ConnectionState.Open)
-                {
-                    sqlConnection.Close();
-                }
-            }
-        }
+        
     }
 }

@@ -40,6 +40,7 @@ namespace DAL
             services.AddTransient<IIngredienteUnitOfWork, IngredienteUnitOfWork>();
             services.AddTransient<IRecetaCantidadIngredienteRepository, RecetaCantidadIngredienteRepository>();
             services.AddTransient<IRecetaRepository, RecetaRepository>();
+            services.AddTransient<IConversionRepository,ConversionRepository>();
 
             return services;
         }

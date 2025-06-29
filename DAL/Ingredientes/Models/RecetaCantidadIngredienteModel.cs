@@ -10,9 +10,10 @@ namespace DAL.Ingredientes.Models
     {
         public int Id { get; set; }
         public int RecetaId { get; set; }
-        public int IngredienteId { get; set; }
+        public int ComponenteRecetaId { get; set; }
         public int UnidadDeMedidaId { get; set; }
         public decimal Cantidad { get; set; }
         public decimal DesperdicioAceptado { get; set; }
+        public decimal? Costo { get; set; }
     }
 }

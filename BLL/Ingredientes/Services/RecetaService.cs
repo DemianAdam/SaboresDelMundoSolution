@@ -4,6 +4,8 @@ using DAL.Configuraciones.Models;
 using DAL.Ingredientes;
 using DAL.Ingredientes.Contracts;
 using DAL.Ingredientes.Models;
+using DAL.Insumos;
+using DAL.Insumos.Models;
 using Entities;
 using Mapper.Ingredientes;
 using System;
@@ -19,42 +21,99 @@ namespace BLL.Ingredientes.Services
         private readonly IRecetaRepository recetaRepository;
         private readonly IIngredienteUnitOfWork ingredienteUnitOfWork;
         private readonly IUnidadDeMedidaRepository unidadDeMedidaRepository;
-        private readonly IIngredienteService ingredienteService;
+        private readonly IInsumoUnitOfWork insumoUnitOfWork;
 
-        public RecetaService(IRecetaRepository recetaRepository, IIngredienteUnitOfWork ingredienteUnitOfWork, IUnidadDeMedidaRepository unidadDeMedidaRepository, IIngredienteService ingredienteService)
+        public RecetaService(IRecetaRepository recetaRepository, IIngredienteUnitOfWork ingredienteUnitOfWork, IUnidadDeMedidaRepository unidadDeMedidaRepository, IInsumoUnitOfWork insumoUnitOfWork)
         {
             this.recetaRepository = recetaRepository;
             this.ingredienteUnitOfWork = ingredienteUnitOfWork;
             this.unidadDeMedidaRepository = unidadDeMedidaRepository;
-            this.ingredienteService = ingredienteService;
+            this.insumoUnitOfWork = insumoUnitOfWork;
         }
+
+        public event EventHandler? OnOperationFinished;
+
         public List<Receta> GetAll()
         {
-            List<IngredienteModel> recetasModel = recetaRepository.GetAll();
+            List<RecetaModel> recetasModel = recetaRepository.GetAll();
             List<IngredienteModel> ingredienteModels = ingredienteUnitOfWork.GetAllIngredienteModel();
+            List<ComponenteRecetaModel> componenteRecetaModels = new List<ComponenteRecetaModel>();
+            componenteRecetaModels.AddRange(ingredienteModels);
+            componenteRecetaModels.AddRange(recetasModel);
             List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels = ingredienteUnitOfWork.GetAllRecetaCantidadIngredienteModels();
             List<UnidadDeMedidaModel> unidadDeMedidaModels = unidadDeMedidaRepository.GetAll();
-            List<Receta> recetas = recetasModel.ToRecetas(recetaCantidadIngredienteModels, ingredienteModels, unidadDeMedidaModels);
+            List<InsumoModel> insumoModels = insumoUnitOfWork.GetAllInsumos();
+            List<Receta> recetas = recetasModel.ToRecetas(recetaCantidadIngredienteModels, componenteRecetaModels, unidadDeMedidaModels, insumoModels, ingredienteModels);
             return recetas;
         }
-        public List<Ingrediente> GetAvailableIngredientes(Receta receta)
+        public List<ComponenteReceta> GetAvailableIngredientes(Receta receta)
         {
-            return ingredienteService.GetAll().Where(i =>
+            List<ComponenteReceta> componenteRecetas = new List<ComponenteReceta>();
+            List<InsumoModel> insumoModels = insumoUnitOfWork.GetAllInsumos();
+            List<IngredienteModel> ingredientesModel = ingredienteUnitOfWork.GetAllIngredienteModel();
+
+            List<Ingrediente> ingredientes = ingredientesModel.ToIngredientes(insumoModels);
+            List<Receta> recetas = GetAll().Where(r =>
             {
-                if (i is Receta r)
+                if (r.TieneReceta(receta))
                 {
-                    if (r.TieneReceta(receta))
-                    {
-                        return false; // No incluir recetas que ya contienen la receta actual
-                    }
-                    if (r.Id == receta.Id)
-                    {
-                        return false;
-                    }
+                    return false; // No incluir recetas que ya contienen la receta actual
                 }
-                return true;
+                if (r.Id == receta.Id)
+                {
+                    return false; // No incluir la receta actual
+                }
+                return true; // Incluir recetas que no contienen la receta actual
             }
             ).ToList();
+
+            componenteRecetas.AddRange(ingredientes);
+            componenteRecetas.AddRange(recetas);
+            return componenteRecetas;
+        }
+
+        public void Insert(Receta receta)
+        {
+            RecetaModel recetaModel = receta.ToModel();
+            try
+            {
+                recetaRepository.Insert(recetaModel);
+                OnOperationFinished?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+        }
+
+        public void Remove(Receta receta)
+        {
+            RecetaModel recetaModel = receta.ToModel();
+            try
+            {
+                recetaRepository.Remove(recetaModel);
+                OnOperationFinished?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void Update(Receta updatedReceta)
+        {
+            RecetaModel recetaModel = updatedReceta.ToModel();
+            try
+            {
+                recetaRepository.Update(recetaModel);
+                OnOperationFinished?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -143,7 +143,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new Size(55, 15);
             this.label4.TabIndex = 19;
-            this.label4.Text = "Cantidad";
+            this.label4.Text = "PesoAproximado";
             // 
             // nudCantidad
             // 

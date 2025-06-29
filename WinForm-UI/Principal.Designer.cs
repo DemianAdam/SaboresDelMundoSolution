@@ -41,13 +41,14 @@
             this.comprasToolStripMenuItem = new ToolStripMenuItem();
             this.gestorComprasToolStripMenuItem = new ToolStripMenuItem();
             this.gestorProveedoresToolStripMenuItem = new ToolStripMenuItem();
+            this.recetasToolStripMenuItem = new ToolStripMenuItem();
+            this.gestorDeRecetasToolStripMenuItem = new ToolStripMenuItem();
             this.statusStrip1 = new StatusStrip();
             this.slblTime = new ToolStripStatusLabel();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
             this.statusStrip2 = new StatusStrip();
             this.toolStripStatusLabel2 = new ToolStripStatusLabel();
-            this.recetasToolStripMenuItem = new ToolStripMenuItem();
-            this.gestorDeRecetasToolStripMenuItem = new ToolStripMenuItem();
+            this.conversionesToolStripMenuItem = new ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.statusStrip2.SuspendLayout();
@@ -107,7 +108,7 @@
             // 
             // configuracionesToolStripMenuItem
             // 
-            this.configuracionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { this.unidadesDeMedidaToolStripMenuItem });
+            this.configuracionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { this.unidadesDeMedidaToolStripMenuItem, this.conversionesToolStripMenuItem });
             this.configuracionesToolStripMenuItem.Name = "configuracionesToolStripMenuItem";
             this.configuracionesToolStripMenuItem.Size = new Size(113, 19);
             this.configuracionesToolStripMenuItem.Text = "Configuraciones";
@@ -139,6 +140,20 @@
             this.gestorProveedoresToolStripMenuItem.Size = new Size(176, 22);
             this.gestorProveedoresToolStripMenuItem.Text = "Gestor Proveedores";
             this.gestorProveedoresToolStripMenuItem.Click += gestorProveedoresToolStripMenuItem_Click;
+            // 
+            // recetasToolStripMenuItem
+            // 
+            this.recetasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { this.gestorDeRecetasToolStripMenuItem });
+            this.recetasToolStripMenuItem.Name = "recetasToolStripMenuItem";
+            this.recetasToolStripMenuItem.Size = new Size(113, 19);
+            this.recetasToolStripMenuItem.Text = "Recetas";
+            // 
+            // gestorDeRecetasToolStripMenuItem
+            // 
+            this.gestorDeRecetasToolStripMenuItem.Name = "gestorDeRecetasToolStripMenuItem";
+            this.gestorDeRecetasToolStripMenuItem.Size = new Size(167, 22);
+            this.gestorDeRecetasToolStripMenuItem.Text = "Gestor de Recetas";
+            this.gestorDeRecetasToolStripMenuItem.Click += gestorDeRecetasToolStripMenuItem_Click;
             // 
             // statusStrip1
             // 
@@ -178,19 +193,12 @@
             this.toolStripStatusLabel2.Size = new Size(33, 17);
             this.toolStripStatusLabel2.Text = "Caja:";
             // 
-            // recetasToolStripMenuItem
+            // conversionesToolStripMenuItem
             // 
-            this.recetasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { this.gestorDeRecetasToolStripMenuItem });
-            this.recetasToolStripMenuItem.Name = "recetasToolStripMenuItem";
-            this.recetasToolStripMenuItem.Size = new Size(113, 19);
-            this.recetasToolStripMenuItem.Text = "Recetas";
-            // 
-            // gestorDeRecetasToolStripMenuItem
-            // 
-            this.gestorDeRecetasToolStripMenuItem.Name = "gestorDeRecetasToolStripMenuItem";
-            this.gestorDeRecetasToolStripMenuItem.Size = new Size(180, 22);
-            this.gestorDeRecetasToolStripMenuItem.Text = "Gestor de Recetas";
-            this.gestorDeRecetasToolStripMenuItem.Click += gestorDeRecetasToolStripMenuItem_Click;
+            this.conversionesToolStripMenuItem.Name = "conversionesToolStripMenuItem";
+            this.conversionesToolStripMenuItem.Size = new Size(182, 22);
+            this.conversionesToolStripMenuItem.Text = "Conversiones";
+            this.conversionesToolStripMenuItem.Click += conversionesToolStripMenuItem_Click;
             // 
             // Principal
             // 
@@ -237,5 +245,6 @@
         private ToolStripStatusLabel toolStripStatusLabel2;
         private ToolStripMenuItem recetasToolStripMenuItem;
         private ToolStripMenuItem gestorDeRecetasToolStripMenuItem;
+        private ToolStripMenuItem conversionesToolStripMenuItem;
     }
 }

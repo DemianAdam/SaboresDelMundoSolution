@@ -9,6 +9,6 @@ namespace DAL.Insumos.Contracts
         void Remove(InsumoModel insumo, SqlConnection connection, SqlTransaction? sqlTransaction = null);
         void Update(InsumoModel insumo, SqlConnection connection, SqlTransaction? sqlTransaction = null);
         List<InsumoModel> GetAll(SqlConnection sqlConnection, SqlTransaction? sqlTransaction = null);
-        bool Exists(InsumoModel insumoModel, SqlConnection sqlConnection);
+        bool Exists(InsumoModel insumoModel, SqlConnection sqlConnection, SqlTransaction? sqlTransaction = null);
     }
 }

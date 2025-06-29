@@ -12,7 +12,5 @@ namespace DAL.Ingredientes
         List<IngredienteModel> GetAllIngredienteModel();
         List<RecetaCantidadIngredienteModel> GetAllRecetaCantidadIngredienteModels();
         void Insert(IngredienteModel ingrediente, List<RecetaCantidadIngredienteModel>? recetaCantidadIngredienteModels = null);
-        void Remove(IngredienteModel ingrediente);
-        void Update(IngredienteModel ingrediente, List<RecetaCantidadIngredienteModel>? recetaCantidadIngredienteModels = null);
     }
 }

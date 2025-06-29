@@ -38,14 +38,7 @@ namespace Mapper.Configuraciones
                 throw new ArgumentException("Invalid conversion model data.");
             }
 
-            return new Conversion
-            {
-                Id = conversionModel.Id,
-                Insumo = insumo,
-                UnidadDeMedidaFrom = unidadFrom,
-                UnidadDeMedidaTo = unidadTo,
-                Factor = conversionModel.Factor
-            };
+            return new Conversion(conversionModel.Id, insumo, unidadFrom, unidadTo, conversionModel.Factor);
         }
     }
 }

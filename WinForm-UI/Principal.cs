@@ -77,5 +77,11 @@ namespace WinForm_UI
             GestorRecetas gestorRecetas = formFactoryService.CreateForm<GestorRecetas>();
             this.AddMdiChild(gestorRecetas);
         }
+
+        private void conversionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestorConversiones gestorConversiones = formFactoryService.CreateForm<GestorConversiones>();
+            this.AddMdiChild(gestorConversiones);
+        }
     }
 }

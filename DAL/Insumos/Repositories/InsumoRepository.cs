@@ -14,10 +14,11 @@ namespace DAL.Insumos.Repositories
 {
     internal class InsumoRepository : IInsumoRepository
     {
-        public bool Exists(InsumoModel insumoModel, SqlConnection sqlConnection)
+
+        public bool Exists(InsumoModel insumoModel, SqlConnection sqlConnection, SqlTransaction? sqlTransaction = null)
         {
             string spExistsInsumo = "sp_exists_insumo";
-            return sqlConnection.ExecuteScalar<bool>(spExistsInsumo, new { nombre = insumoModel.Nombre, descripcion = insumoModel.Descripcion }, commandType: CommandType.StoredProcedure);
+            return sqlConnection.ExecuteScalar<bool>(spExistsInsumo, new { nombre = insumoModel.Nombre, descripcion = insumoModel.Descripcion }, sqlTransaction, commandType: CommandType.StoredProcedure);
         }
 
         public List<InsumoModel> GetAll(SqlConnection sqlConnection, SqlTransaction? sqlTransaction = null)
@@ -30,7 +31,7 @@ namespace DAL.Insumos.Repositories
         public void Insert(InsumoModel insumo, SqlConnection connection, SqlTransaction? sqlTransaction = null)
         {
             string spInsertInsumo = "sp_insert_insumo";
-            connection.Execute(spInsertInsumo, new { nombre = insumo.Nombre, descripcion = insumo.Descripcion, tipoInsumoId = insumo.TipoInsumoId }, commandType: CommandType.StoredProcedure, transaction: sqlTransaction);
+            insumo.Id = connection.ExecuteScalar<int>(spInsertInsumo, new { nombre = insumo.Nombre, descripcion = insumo.Descripcion, tipoInsumoId = insumo.TipoInsumoId }, commandType: CommandType.StoredProcedure, transaction: sqlTransaction);
         }
 
         public void Remove(InsumoModel insumo, SqlConnection connection, SqlTransaction? sqlTransaction = null)

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Ingredientes.Models
 {
-    public class IngredienteModel : ComponenteRecetaModel
+    public abstract class ComponenteRecetaModel
     {
-        public int InsumoId { get; set; }
+        public int ComponenteRecetaId { get; set; }
     }
 }

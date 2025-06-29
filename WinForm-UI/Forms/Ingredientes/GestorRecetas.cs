@@ -1,4 +1,5 @@
 ﻿using BLL;
+using BLL.Configuraciones.Contracts;
 using BLL.Ingredientes.Context;
 using BLL.Ingredientes.Contracts;
 using Entities;
@@ -19,25 +20,28 @@ namespace WinForm_UI.Forms.Ingredientes
 {
     public partial class GestorRecetas : Form, IGetInput<Receta>
     {
-        private readonly IIngredienteService ingredienteService;
+
         private readonly IRecetaService recetaService;
         private readonly IContextFactory contextFactory;
         private readonly IFormFactoryService formFactoryService;
+        private readonly IUnidadDeMedidaService unidadDeMedidaService;
 
         private List<Receta> recetas => recetaService.GetAll();
-        public GestorRecetas(IIngredienteService ingredienteService, IRecetaService recetaService, IContextFactory contextFactory, IFormFactoryService formFactoryService)
+        public GestorRecetas(IRecetaService recetaService, IContextFactory contextFactory, IFormFactoryService formFactoryService,IUnidadDeMedidaService unidadDeMedidaService)
         {
             InitializeComponent();
-            this.ingredienteService = ingredienteService;
             this.recetaService = recetaService;
             this.contextFactory = contextFactory;
             this.formFactoryService = formFactoryService;
-            this.ingredienteService.OnOperationFinished += (s, e) => FormHelper.UpdateControl(dgvRecetas, recetas);
+            this.unidadDeMedidaService = unidadDeMedidaService;
+            //this.ingredienteService.OnOperationFinished += (s, e) => FormHelper.UpdateControl(dgvRecetas, recetas);
+            this.recetaService.OnOperationFinished += (s, e) => FormHelper.UpdateControl(dgvRecetas, recetas);
         }
 
         private void GestorRecetas_Load(object sender, EventArgs e)
         {
             FormHelper.UpdateControl(dgvRecetas, recetas);
+            FormHelper.UpdateControl(cmbUnidadDeMedida, unidadDeMedidaService, nameof(UnidadDeMedida.Unidad));
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -50,7 +54,7 @@ namespace WinForm_UI.Forms.Ingredientes
 
             try
             {
-                this.ingredienteService.Insert(receta);
+                this.recetaService.Insert(receta);
             }
             catch (Exception ex)
             {
@@ -60,11 +64,19 @@ namespace WinForm_UI.Forms.Ingredientes
 
         public Receta? GetObjectFromInputs(int id = -1)
         {
+            UnidadDeMedida? unidadDeMedida = FormHelper.GetSelected<UnidadDeMedida>(cmbUnidadDeMedida);
+            if (unidadDeMedida is null)
+            {
+                MessageBox.Show("Por favor, seleccione una unidad de medida válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
             Receta receta = new Receta
             {
                 Id = id,
                 Nombre = txtNombre.Text.Trim(),
-                Descripcion = txtDescripcion.GetNullableText()
+                Descripcion = txtDescripcion.GetNullableText(),
+                UnidadDeMedida = unidadDeMedida,
+                PesoAproximado = nudPesoAproximado.Value,
             };
             if (receta.Nombre == string.Empty)
             {
@@ -84,7 +96,7 @@ namespace WinForm_UI.Forms.Ingredientes
             }
             try
             {
-                this.ingredienteService.Remove(receta);
+                this.recetaService.Remove(receta);
             }
             catch (Exception ex)
             {
@@ -107,7 +119,7 @@ namespace WinForm_UI.Forms.Ingredientes
             }
             try
             {
-                this.ingredienteService.Update(updatedReceta);
+                this.recetaService.Update(updatedReceta);
             }
             catch (Exception ex)
             {

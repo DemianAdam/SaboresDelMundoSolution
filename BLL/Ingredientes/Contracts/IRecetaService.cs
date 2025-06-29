@@ -9,6 +9,11 @@ namespace BLL.Ingredientes.Contracts
 {
     public interface IRecetaService : IGetAll<Receta>
     {
-        public List<Ingrediente> GetAvailableIngredientes(Receta receta);
+        public event EventHandler? OnOperationFinished;
+
+        public List<ComponenteReceta> GetAvailableIngredientes(Receta receta);
+        void Insert(Receta receta);
+        void Remove(Receta receta);
+        void Update(Receta updatedReceta);
     }
 }

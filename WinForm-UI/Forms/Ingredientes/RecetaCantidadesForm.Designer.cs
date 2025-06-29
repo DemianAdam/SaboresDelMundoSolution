@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.dgvIngredientes = new DataGridView();
-            this.cmbIngredientes = new ComboBox();
+            this.cmbComponenteReceta = new ComboBox();
             this.label1 = new Label();
             this.label2 = new Label();
             this.cmbUnidadDeMedida = new ComboBox();
@@ -54,22 +54,22 @@
             this.dgvIngredientes.Size = new Size(377, 155);
             this.dgvIngredientes.TabIndex = 0;
             // 
-            // cmbIngredientes
+            // cmbComponenteReceta
             // 
-            this.cmbIngredientes.FormattingEnabled = true;
-            this.cmbIngredientes.Location = new Point(12, 28);
-            this.cmbIngredientes.Name = "cmbIngredientes";
-            this.cmbIngredientes.Size = new Size(121, 23);
-            this.cmbIngredientes.TabIndex = 1;
+            this.cmbComponenteReceta.FormattingEnabled = true;
+            this.cmbComponenteReceta.Location = new Point(12, 28);
+            this.cmbComponenteReceta.Name = "cmbComponenteReceta";
+            this.cmbComponenteReceta.Size = new Size(121, 23);
+            this.cmbComponenteReceta.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new Size(67, 15);
+            this.label1.Size = new Size(115, 15);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Ingrediente";
+            this.label1.Text = "Componente Receta";
             // 
             // label2
             // 
@@ -93,9 +93,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new Point(139, 10);
             this.label3.Name = "label3";
-            this.label3.Size = new Size(55, 15);
+            this.label3.Size = new Size(98, 15);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Cantidad";
+            this.label3.Text = "PesoAproximado";
             // 
             // nudCantidad
             // 
@@ -167,7 +167,7 @@
             Controls.Add(this.label2);
             Controls.Add(this.cmbUnidadDeMedida);
             Controls.Add(this.label1);
-            Controls.Add(this.cmbIngredientes);
+            Controls.Add(this.cmbComponenteReceta);
             Controls.Add(this.dgvIngredientes);
             Name = "RecetaCantidadesForm";
             Text = "RecetaCantidadesForm";
@@ -182,7 +182,7 @@
         #endregion
 
         private DataGridView dgvIngredientes;
-        private ComboBox cmbIngredientes;
+        private ComboBox cmbComponenteReceta;
         private Label label1;
         private Label label2;
         private ComboBox cmbUnidadDeMedida;

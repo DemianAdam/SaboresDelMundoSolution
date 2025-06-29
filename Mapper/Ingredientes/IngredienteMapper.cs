@@ -1,5 +1,6 @@
 ﻿using DAL.Configuraciones.Models;
 using DAL.Ingredientes.Models;
+using DAL.Insumos.Models;
 using Entities;
 using System;
 using System.Collections.Generic;
@@ -15,33 +16,28 @@ namespace Mapper.Ingredientes
         {
             return new IngredienteModel
             {
-                Id = ingrediente.Id,
-                Nombre = ingrediente.Nombre,
-                Descripcion = ingrediente.Descripcion,
-                EsReceta = ingrediente is Receta
+                ComponenteRecetaId = ingrediente.Id,
             };
         }
 
-        public static Ingrediente ToIngrediente(this IngredienteModel ingredienteModel, List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels,List<IngredienteModel> ingredienteModels,List<UnidadDeMedidaModel> unidadDeMedidaModels)
+        public static Ingrediente ToIngrediente(this IngredienteModel ingredienteModel, List<InsumoModel> insumoModels)
         {
-            if (ingredienteModel.EsReceta)
+            InsumoModel? insumoModel = insumoModels.FirstOrDefault(i => i.Id == ingredienteModel.InsumoId);
+            if (insumoModel is null)
             {
-                return ingredienteModel.ToReceta(recetaCantidadIngredienteModels, ingredienteModels, unidadDeMedidaModels);
+                throw new ArgumentException($"No se encontró el insumo con ID {ingredienteModel.InsumoId}");
             }
-            else
+            return new Ingrediente
             {
-                return new Ingrediente
-                {
-                    Id = ingredienteModel.Id,
-                    Nombre = ingredienteModel.Nombre,
-                    Descripcion = ingredienteModel.Descripcion
-                };
-            }
+                Id = ingredienteModel.ComponenteRecetaId,
+                Nombre = insumoModel.Nombre,
+                Descripcion = insumoModel.Descripcion,
+            };
         }
 
-        public static List<Ingrediente> ToIngredientes(this List<IngredienteModel> ingredienteModels, List<RecetaCantidadIngredienteModel> recetaCantidadIngredienteModels, List<IngredienteModel> ingredienteModels2, List<UnidadDeMedidaModel> unidadDeMedidaModels)
+        public static List<Ingrediente> ToIngredientes(this List<IngredienteModel> ingredienteModels, List<InsumoModel> insumoModels)
         {
-            return ingredienteModels.Select(i => i.ToIngrediente(recetaCantidadIngredienteModels, ingredienteModels2, unidadDeMedidaModels)).ToList();
+            return ingredienteModels.Select(i => i.ToIngrediente(insumoModels)).ToList();
         }
     }
 }

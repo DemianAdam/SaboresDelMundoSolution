@@ -50,17 +50,29 @@ namespace DAL.Insumos
             using SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
             try
             {
+                bool InsumoExists = insumoRepository.Exists(insumo, sqlConnection, sqlTransaction);
+                TipoInsumoModel? tipoIngrediente = tipoInsumoRepository.GetAll(sqlConnection, sqlTransaction).FirstOrDefault(t => t.Tipo == "Ingrediente");
+
+                if (InsumoExists)
+                {
+                    throw new Exception("El insumo ya existe.");
+                }
+                if (tipoIngrediente is null)
+                {
+                    throw new Exception("Tipo de insumo no encontrado.");
+                }
+
                 insumoRepository.Insert(insumo, sqlConnection, sqlTransaction);
 
-                if (insumo.IngredienteModel is not null)
+                if (insumo.TipoInsumoId == tipoIngrediente.Id)
                 {
-                    bool IngredienteExists = ingredienteRepository.Exists(insumo.IngredienteModel, sqlConnection, sqlTransaction);
-                    if (!IngredienteExists)
+                    ingredienteRepository.Insert(new IngredienteModel
                     {
-                        ingredienteRepository.Insert(insumo.IngredienteModel, sqlConnection, sqlTransaction);
-                    }
-
+                        InsumoId = insumo.Id,
+                    }, sqlConnection, sqlTransaction);
                 }
+
+
                 sqlTransaction.Commit();
             }
             catch (Exception)
@@ -95,35 +107,31 @@ namespace DAL.Insumos
             using SqlTransaction sqlTransaction = sqlConnection.BeginTransaction();
             try
             {
-                InsumoModel? actualInsumoModel = insumoRepository.GetAll(sqlConnection,sqlTransaction).FirstOrDefault(i => i.Id == insumo.Id);
-                TipoInsumoModel? tipoInsumoModel = tipoInsumoRepository.GetAll(sqlConnection, sqlTransaction).FirstOrDefault(t => t.Id == insumo.TipoInsumoId);
+                InsumoModel? actualInsumoModel = insumoRepository.GetAll(sqlConnection, sqlTransaction).FirstOrDefault(i => i.Id == insumo.Id);
+                TipoInsumoModel? tipoIngrediente = tipoInsumoRepository.GetAll(sqlConnection, sqlTransaction).FirstOrDefault(t => t.Tipo == "Ingrediente");
                 if (actualInsumoModel is null)
                 {
                     throw new Exception("Insumo no encontrado.");
                 }
-                if (tipoInsumoModel is null)
+                if (tipoIngrediente is null)
                 {
                     throw new Exception("Tipo de insumo no encontrado.");
                 }
 
-                if (tipoInsumoModel.Tipo == "Ingrediente")
+                if (insumo.TipoInsumoId != tipoIngrediente.Id)
                 {
-                    IngredienteModel? ingredienteModel = insumo.IngredienteModel;
-                    if (ingredienteModel is null)
-                    {
-                        ingredienteModel = ingredienteRepository.GetAll(sqlConnection,sqlTransaction).FirstOrDefault(i => i.Nombre == actualInsumoModel.Nombre && i.Descripcion == actualInsumoModel.Descripcion);
-                    }
-                    if (ingredienteModel is null)
-                    {
-                        throw new Exception("Ingrediente no encontrado.");
-                    }
-
-                    ingredienteModel.Nombre = insumo.Nombre;
-                    ingredienteModel.Descripcion = insumo.Descripcion;
-
-                    ingredienteRepository.Update(ingredienteModel, sqlConnection, sqlTransaction);
-
+                    ingredienteRepository.RemoveByInsumo(insumo, sqlConnection, sqlTransaction);
                 }
+
+                if (actualInsumoModel.TipoInsumoId != tipoIngrediente.Id && insumo.TipoInsumoId == tipoIngrediente.Id)
+                {
+                    ingredienteRepository.Insert(new IngredienteModel
+                    {
+                        InsumoId = insumo.Id,
+                    }, sqlConnection, sqlTransaction);
+                }
+
+
                 insumoRepository.Update(insumo, sqlConnection, sqlTransaction);
                 sqlTransaction.Commit();
             }
