@@ -1,6 +1,8 @@
 ﻿using DAL.Compra.Models;
 using DAL.Configuraciones.Models;
 using DAL.Insumos.Models;
+using Entities.Compartido;
+using Entities.Configuraciones;
 using Entities.Transacciones.Compras;
 using Mapper.Configuraciones;
 using Mapper.Insumos;
@@ -20,12 +22,21 @@ namespace Mapper.Transacciones.Compras
         }
         public static DetalleCompra ToDetalleCompra(this DetalleCompraModel detalleCompraModel, List<InsumoModel> insumoModels, List<TipoInsumoModel> tipoInsumoModels, List<UnidadDeMedidaModel> unidadDeMedidaModels)
         {
+            UnidadDeMedida? unidadDeMedida = unidadDeMedidaModels.FirstOrDefault(u => u.Id == detalleCompraModel.UnidadDeMedidaId)?.ToUnidadDeMedida();
+            if (unidadDeMedida == null)
+            {
+                throw new ArgumentException($"Unidad de medida con ID {detalleCompraModel.UnidadDeMedidaId} no encontrada.");
+            }
+            Peso peso = new Peso
+            {
+                Valor = detalleCompraModel.Cantidad,
+                UnidadDeMedida = unidadDeMedida
+            };
             return new DetalleCompra
             {
                 Id = detalleCompraModel.Id,
                 Insumo = insumoModels.First(i => i.Id == detalleCompraModel.InsumoId).ToInsumo(tipoInsumoModels),
-                Unidad = unidadDeMedidaModels.First(u => u.Id == detalleCompraModel.UnidadDeMedidaId).ToUnidadDeMedida(),
-                Cantidad = detalleCompraModel.Cantidad,
+                Peso = peso,
                 Costo = detalleCompraModel.Costo
             };
         }
@@ -39,8 +50,8 @@ namespace Mapper.Transacciones.Compras
             {
                 Id = detalleCompra.Id,
                 InsumoId = detalleCompra.Insumo.Id,
-                UnidadDeMedidaId = detalleCompra.Unidad.Id,
-                Cantidad = detalleCompra.Cantidad,
+                UnidadDeMedidaId = detalleCompra.Peso.UnidadDeMedida.Id,
+                Cantidad = detalleCompra.Peso.Valor,
                 Costo = detalleCompra.Costo,
                 CompraId = compra.Id
             };

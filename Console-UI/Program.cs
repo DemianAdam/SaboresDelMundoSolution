@@ -7,6 +7,7 @@ using BLL.Productos.Contracts;
 using Entities.Productos;
 namespace Console_UI
 {
+
     internal class Program
     {
 
@@ -16,30 +17,29 @@ namespace Console_UI
 
 
 
+            /* var host = Host.CreateDefaultBuilder(args)
+                 .ConfigureAppConfiguration((context, config) =>
+                 {
+                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                 }).ConfigureServices((context, services) =>
+                 {
+                     IConfiguration config = context.Configuration;
 
-            var host = Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((context, config) =>
-                {
-                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-                }).ConfigureServices((context, services) =>
-                {
-                    IConfiguration config = context.Configuration;
+                     // Register services
+                     services.AddSingleton<IConfiguration>(config); // Pass to DAL
+                     services.AddDAL(config);
+                     services.AddBLL(config);
+                 })
+             .Build();
 
-                    // Register services
-                    services.AddSingleton<IConfiguration>(config); // Pass to DAL
-                    services.AddDAL(config);
-                    services.AddBLL(config);
-                })
-            .Build();
+             var repo = host.Services.GetRequiredService<IProductoService>();
 
-            var repo = host.Services.GetRequiredService<IProductoService>();
+             List<Producto> productos = ((IGetAll<Producto>)repo).GetAll();
 
-            List<Producto> productos = ((IGetAll<Producto>)repo).GetAll();
-
-            foreach (var item in productos)
-            {
-                Console.WriteLine(item.Nombre);
-            }
+             foreach (var item in productos)
+             {
+                 Console.WriteLine(item.Nombre);
+             }*/
         }
     }
 }

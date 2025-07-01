@@ -1,8 +1,9 @@
-﻿namespace Entities.Transacciones.Compras
+﻿using Entities.Abstracciones;
+
+namespace Entities.Transacciones.Compras
 {
-    public class Proveedor
+    public class Proveedor : BaseEntity
     {
-        public int Id { get; set; }
         public string Nombre { get; set; } = null!;
     }
 }

@@ -4,6 +4,7 @@ using DAL.Configuraciones.Models;
 using DAL.Ingredientes;
 using DAL.Ingredientes.Contracts;
 using DAL.Ingredientes.Models;
+using DAL.Ingredientes.Models.Recetas;
 using DAL.Insumos;
 using DAL.Insumos.Models;
 using Entities.Ingredientes;
@@ -74,7 +75,7 @@ namespace BLL.Ingredientes.Services
 
         public void Insert(Receta receta)
         {
-            RecetaModel recetaModel = receta.ToModel();
+            InsertRecetaModel recetaModel = receta.ToModel().ToInsert();
             try
             {
                 recetaRepository.Insert(recetaModel);

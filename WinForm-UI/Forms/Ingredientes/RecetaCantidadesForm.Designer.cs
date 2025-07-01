@@ -93,9 +93,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new Point(139, 10);
             this.label3.Name = "label3";
-            this.label3.Size = new Size(98, 15);
+            this.label3.Size = new Size(55, 15);
             this.label3.TabIndex = 6;
-            this.label3.Text = "PesoAproximado";
+            this.label3.Text = "Cantidad";
             // 
             // nudCantidad
             // 

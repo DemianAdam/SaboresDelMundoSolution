@@ -1,8 +1,9 @@
-﻿namespace Entities.Configuraciones
+﻿using Entities.Abstracciones;
+
+namespace Entities.Configuraciones
 {
-    public class UnidadDeMedida : ICloneable<UnidadDeMedida>
+    public class UnidadDeMedida : BaseEntity, ICloneable<UnidadDeMedida>
     {
-        public int Id { get; set; }
         public string Unidad { get; set; } = null!;
 
         public override string ToString()

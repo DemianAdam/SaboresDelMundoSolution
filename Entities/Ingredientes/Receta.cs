@@ -1,4 +1,5 @@
-﻿using Entities.Configuraciones;
+﻿using Entities.Compartido;
+using Entities.Configuraciones;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +11,27 @@ namespace Entities.Ingredientes
     public class Receta : ComponenteReceta
     {
         public List<CantidadIngrediente>? CantidadIngredientes { get; set; }
-        public required UnidadDeMedida UnidadDeMedida { get; set; }
-        public required decimal PesoAproximado { get; set; }
+        public required Peso Peso { get; set; }
         public decimal Costo { get => CantidadIngredientes?.Sum(x => x.Costo)??0;}
+        public required int Porciones { get; set; }
 
-        public decimal CostoUnitario
+        public decimal CostoPorPeso
         {
             get
             {
-                if (PesoAproximado <= 0)
+                if (Peso.Valor <= 0)
                     return 0;
-                return Costo / PesoAproximado;
+                return Costo / Peso.Valor;
+            }
+        }
+
+        public decimal CostoPorPorcion
+        {
+            get
+            {
+                if (Porciones <= 0)
+                    return 0;
+                return Costo / Porciones;
             }
         }
 
@@ -32,8 +43,8 @@ namespace Entities.Ingredientes
                 Nombre = Nombre,
                 Descripcion = Descripcion,
                 CantidadIngredientes = CantidadIngredientes?.Select(ci => ci.Clone()).ToList(),
-                UnidadDeMedida = UnidadDeMedida.Clone(),
-                PesoAproximado = PesoAproximado,
+                Peso = Peso.Clone(),
+                Porciones = Porciones
             };
         }
 
@@ -61,8 +72,7 @@ namespace Entities.Ingredientes
             }
             else
             {
-                findedCantidadIngrediente.Cantidad = cantidadIngrediente.Cantidad;
-                findedCantidadIngrediente.UnidadDeMedida = cantidadIngrediente.UnidadDeMedida.Clone();
+                findedCantidadIngrediente.Peso = cantidadIngrediente.Peso.Clone();
                 findedCantidadIngrediente.DesperdicioAceptado = cantidadIngrediente.DesperdicioAceptado;
             }
         }

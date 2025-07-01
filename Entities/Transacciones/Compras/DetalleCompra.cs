@@ -1,4 +1,6 @@
-﻿using Entities.Configuraciones;
+﻿using Entities.Abstracciones;
+using Entities.Compartido;
+using Entities.Configuraciones;
 using Entities.Insumos;
 using System;
 using System.Collections.Generic;
@@ -8,12 +10,10 @@ using System.Threading.Tasks;
 
 namespace Entities.Transacciones.Compras
 {
-    public class DetalleCompra
+    public class DetalleCompra : BaseEntity
     {
-        public int Id { get; set; }
         public required Insumo Insumo { get; set; }
-        public required UnidadDeMedida Unidad { get; set; }
-        public decimal Cantidad { get; set; } 
+        public required Peso Peso { get; set; }
         public decimal Costo { get; set; }
     }
 }

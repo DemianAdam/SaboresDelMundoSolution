@@ -1,5 +1,6 @@
 ﻿using BLL.Configuraciones.Contracts;
 using BLL.Ingredientes.Contracts;
+using Entities.Compartido;
 using Entities.Configuraciones;
 using Entities.Ingredientes;
 using System;
@@ -57,19 +58,24 @@ namespace WinForm_UI.Forms.Ingredientes
             UnidadDeMedida? unidadDeMedida = cmbUnidadDeMedida.GetSelected<UnidadDeMedida>();
             if (componenteReceta is null || unidadDeMedida is null)
             {
-                MessageBox.Show("Debe seleccionar un componenteReceta y una unidad de medida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Debe seleccionar un ingrediente y una unidad de medida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
+
+            Peso peso = new Peso
+            {
+                Valor = nudCantidad.Value,
+                UnidadDeMedida = unidadDeMedida.Clone()
+            };
 
             CantidadIngrediente cantidadIngrediente = new CantidadIngrediente
             {
                 Id = id,
                 ComponenteReceta = componenteReceta.Clone(),
-                Cantidad = nudCantidad.Value,
-                UnidadDeMedida = unidadDeMedida.Clone(),
+                Peso = peso,
                 DesperdicioAceptado = nudDesperdicioAceptado.Value,
                 Costo = componenteReceta is Receta receta
-                    ? receta.CostoUnitario * nudCantidad.Value
+                    ? receta.CostoPorPeso * nudCantidad.Value
                     : 0 // Assuming costo is calculated differently for other types of ComponenteReceta
             };
 

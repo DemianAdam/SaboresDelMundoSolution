@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Abstracciones;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Entities.Insumos
 {
-    public class Insumo
+    public class Insumo : BaseEntity
     {
-        public int Id { get; set; }
         public string Nombre { get; set; } = null!; 
         public string? Descripcion { get; set; }
         public TipoInsumo Tipo { get; set; } = null!; 

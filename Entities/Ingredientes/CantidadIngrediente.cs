@@ -1,4 +1,6 @@
-﻿using Entities.Configuraciones;
+﻿using Entities.Abstracciones;
+using Entities.Compartido;
+using Entities.Configuraciones;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +9,11 @@ using System.Threading.Tasks;
 
 namespace Entities.Ingredientes
 {
-    public class CantidadIngrediente : ICloneable<CantidadIngrediente>
+    public class CantidadIngrediente : BaseEntity, ICloneable<CantidadIngrediente>
     {
         private decimal costo;
-        public int Id { get; set; }
         public ComponenteReceta ComponenteReceta { get; set; } = null!;
-        public decimal Cantidad { get; set; }
-        public UnidadDeMedida UnidadDeMedida { get; set; } = null!;
+        public required Peso Peso { get; set; }
         public decimal DesperdicioAceptado { get; set; } = 0;
         public required decimal Costo
         {
@@ -21,7 +21,7 @@ namespace Entities.Ingredientes
             {
                 if (ComponenteReceta is Receta receta)
                 {
-                    return receta.CostoUnitario * Cantidad;
+                    return receta.CostoPorPeso * Peso.Valor;
                 }
                 return costo;
             }
@@ -35,15 +35,14 @@ namespace Entities.Ingredientes
             {
                 Id = Id,
                 ComponenteReceta = ComponenteReceta.Clone(),
-                Cantidad = Cantidad,
-                UnidadDeMedida = UnidadDeMedida.Clone(),
+                Peso = Peso.Clone(),
                 DesperdicioAceptado = DesperdicioAceptado,
                 Costo = Costo
             };
         }
         public override string ToString()
         {
-            return $"{Cantidad} x {ComponenteReceta.Nombre}";
+            return $"{Peso.Valor} x {ComponenteReceta.Nombre}";
         }
     }
 }

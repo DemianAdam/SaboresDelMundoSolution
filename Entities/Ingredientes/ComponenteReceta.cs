@@ -1,8 +1,9 @@
-﻿namespace Entities.Ingredientes
+﻿using Entities.Abstracciones;
+
+namespace Entities.Ingredientes
 {
-    public abstract class ComponenteReceta : ICloneable<ComponenteReceta>
+    public abstract class ComponenteReceta : BaseEntity, ICloneable<ComponenteReceta>
     {
-        public int Id { get; set; }
         public string Nombre { get; set; } = null!;
         public string? Descripcion { get; set; }
 

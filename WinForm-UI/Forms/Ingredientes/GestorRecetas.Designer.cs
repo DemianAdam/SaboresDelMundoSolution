@@ -41,8 +41,11 @@
             this.nudPesoAproximado = new NumericUpDown();
             this.label3 = new Label();
             this.label4 = new Label();
+            this.nudPorciones = new NumericUpDown();
+            this.label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)this.dgvRecetas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)this.nudPesoAproximado).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)this.nudPorciones).BeginInit();
             SuspendLayout();
             // 
             // dgvRecetas
@@ -51,12 +54,12 @@
             this.dgvRecetas.Dock = DockStyle.Bottom;
             this.dgvRecetas.Location = new Point(0, 101);
             this.dgvRecetas.Name = "dgvRecetas";
-            this.dgvRecetas.Size = new Size(551, 280);
+            this.dgvRecetas.Size = new Size(564, 280);
             this.dgvRecetas.TabIndex = 0;
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new Point(461, 11);
+            this.btnModificar.Location = new Point(474, 11);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new Size(78, 52);
             this.btnModificar.TabIndex = 15;
@@ -66,7 +69,7 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new Point(377, 10);
+            this.btnEliminar.Location = new Point(390, 10);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new Size(78, 52);
             this.btnEliminar.TabIndex = 14;
@@ -76,7 +79,7 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new Point(293, 10);
+            this.btnAgregar.Location = new Point(306, 10);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new Size(78, 52);
             this.btnAgregar.TabIndex = 13;
@@ -86,7 +89,7 @@
             // 
             // btnModificarIngredientes
             // 
-            this.btnModificarIngredientes.Location = new Point(293, 68);
+            this.btnModificarIngredientes.Location = new Point(306, 68);
             this.btnModificarIngredientes.Name = "btnModificarIngredientes";
             this.btnModificarIngredientes.Size = new Size(246, 23);
             this.btnModificarIngredientes.TabIndex = 16;
@@ -129,24 +132,24 @@
             // cmbUnidadDeMedida
             // 
             this.cmbUnidadDeMedida.FormattingEnabled = true;
-            this.cmbUnidadDeMedida.Location = new Point(138, 27);
+            this.cmbUnidadDeMedida.Location = new Point(146, 26);
             this.cmbUnidadDeMedida.Name = "cmbUnidadDeMedida";
-            this.cmbUnidadDeMedida.Size = new Size(121, 23);
+            this.cmbUnidadDeMedida.Size = new Size(154, 23);
             this.cmbUnidadDeMedida.TabIndex = 20;
             // 
             // nudPesoAproximado
             // 
             this.nudPesoAproximado.DecimalPlaces = 2;
-            this.nudPesoAproximado.Location = new Point(138, 70);
+            this.nudPesoAproximado.Location = new Point(226, 68);
             this.nudPesoAproximado.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
             this.nudPesoAproximado.Name = "nudPesoAproximado";
-            this.nudPesoAproximado.Size = new Size(120, 23);
+            this.nudPesoAproximado.Size = new Size(74, 23);
             this.nudPesoAproximado.TabIndex = 21;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new Point(138, 12);
+            this.label3.Location = new Point(151, 8);
             this.label3.Name = "label3";
             this.label3.Size = new Size(105, 15);
             this.label3.TabIndex = 22;
@@ -155,17 +158,36 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new Point(138, 53);
+            this.label4.Location = new Point(146, 52);
             this.label4.Name = "label4";
-            this.label4.Size = new Size(101, 15);
+            this.label4.Size = new Size(59, 15);
             this.label4.TabIndex = 23;
-            this.label4.Text = "Peso Aproximado";
+            this.label4.Text = "Porciones";
+            // 
+            // nudPorciones
+            // 
+            this.nudPorciones.Location = new Point(146, 68);
+            this.nudPorciones.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
+            this.nudPorciones.Name = "nudPorciones";
+            this.nudPorciones.Size = new Size(74, 23);
+            this.nudPorciones.TabIndex = 24;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new Point(226, 52);
+            this.label5.Name = "label5";
+            this.label5.Size = new Size(32, 15);
+            this.label5.TabIndex = 25;
+            this.label5.Text = "Peso";
             // 
             // GestorRecetas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(551, 381);
+            ClientSize = new Size(564, 381);
+            Controls.Add(this.label5);
+            Controls.Add(this.nudPorciones);
             Controls.Add(this.label4);
             Controls.Add(this.label3);
             Controls.Add(this.nudPesoAproximado);
@@ -184,6 +206,7 @@
             Load += GestorRecetas_Load;
             ((System.ComponentModel.ISupportInitialize)this.dgvRecetas).EndInit();
             ((System.ComponentModel.ISupportInitialize)this.nudPesoAproximado).EndInit();
+            ((System.ComponentModel.ISupportInitialize)this.nudPorciones).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -203,5 +226,7 @@
         private NumericUpDown nudPesoAproximado;
         private Label label3;
         private Label label4;
+        private NumericUpDown nudPorciones;
+        private Label label5;
     }
 }

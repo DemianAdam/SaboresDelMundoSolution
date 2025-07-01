@@ -64,8 +64,7 @@ namespace BLL.Compras.Context
 
             if (existingDetalle is not null)
             {
-                existingDetalle.Cantidad = detalleCompra.Cantidad;
-                existingDetalle.Unidad = detalleCompra.Unidad;
+                existingDetalle.Peso = detalleCompra.Peso.Clone();
                 existingDetalle.Insumo = detalleCompra.Insumo;
                 existingDetalle.Costo = detalleCompra.Costo;
                 OnOperationFinished?.Invoke(this, EventArgs.Empty);

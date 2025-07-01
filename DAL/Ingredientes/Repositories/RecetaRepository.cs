@@ -1,5 +1,5 @@
 ﻿using DAL.Ingredientes.Contracts;
-using DAL.Ingredientes.Models;
+using DAL.Ingredientes.Models.Recetas;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -24,17 +24,11 @@ namespace DAL.Ingredientes.Repositories
             return sqlConnection.Query<RecetaModel>(spSelectAllRecetas, commandType: System.Data.CommandType.StoredProcedure).AsList();
         }
 
-        public void Insert(RecetaModel recetaModel)
+        public void Insert(InsertRecetaModel recetaModel)
         {
             using SqlConnection sqlConnection = new SqlConnection(_connectionString);
             string spInsertReceta = "sp_insert_receta";
-            sqlConnection.Execute(spInsertReceta, new
-            {
-                nombre = recetaModel.Nombre,
-                descripcion = recetaModel.Descripcion,
-                unidadDeMedidaId = recetaModel.UnidadDeMedidaId,
-                pesoAproximado = recetaModel.PesoAproximado,
-            }, commandType: System.Data.CommandType.StoredProcedure);
+            sqlConnection.Execute(spInsertReceta, recetaModel, commandType: System.Data.CommandType.StoredProcedure);
         }
 
         public void Remove(RecetaModel recetaModel)
@@ -48,14 +42,7 @@ namespace DAL.Ingredientes.Repositories
         {
             using SqlConnection sqlConnection = new SqlConnection(_connectionString);
             string spUpdateReceta = "sp_update_receta";
-            sqlConnection.Execute(spUpdateReceta, new
-            {
-                componenteRecetaId = recetaModel.ComponenteRecetaId,
-                nombre = recetaModel.Nombre,
-                descripcion = recetaModel.Descripcion,
-                unidadDeMedidaId = recetaModel.UnidadDeMedidaId,
-                pesoAproximado = recetaModel.PesoAproximado,
-            }, commandType: System.Data.CommandType.StoredProcedure);
+            sqlConnection.Execute(spUpdateReceta, recetaModel, commandType: System.Data.CommandType.StoredProcedure);
         }
     }
 }

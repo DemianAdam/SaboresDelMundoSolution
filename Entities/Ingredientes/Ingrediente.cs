@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Ingredientes
 {
-    public class Ingrediente :ComponenteReceta
+    public class Ingrediente : ComponenteReceta
     {
         public override Ingrediente Clone()
         {

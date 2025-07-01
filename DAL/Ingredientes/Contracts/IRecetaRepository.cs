@@ -1,4 +1,4 @@
-﻿using DAL.Ingredientes.Models;
+﻿using DAL.Ingredientes.Models.Recetas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace DAL.Ingredientes.Contracts
     public interface IRecetaRepository
     {
         List<RecetaModel> GetAll();
-        void Insert(RecetaModel recetaModel);
+        void Insert(InsertRecetaModel recetaModel);
         void Remove(RecetaModel recetaModel);
         void Update(RecetaModel recetaModel);
     }

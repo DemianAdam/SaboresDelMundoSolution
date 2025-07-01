@@ -1,6 +1,7 @@
 ﻿using BLL.Compras.Contracts;
 using BLL.Configuraciones.Contracts;
 using BLL.Insumos.Contracts;
+using Entities.Compartido;
 using Entities.Configuraciones;
 using Entities.Insumos;
 using Entities.Transacciones.Compras;
@@ -15,12 +16,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinForm_UI.Contracts;
 using WinForm_UI.Events;
 using WinForm_UI.Helpers;
 
 namespace WinForm_UI.Forms.Compras
 {
-    public partial class DetallesCompraForm : Form
+    public partial class DetallesCompraForm : Form, IDataForm<DetalleCompra>, IGetInput<Peso>, IGetInput<Insumo>
     {
         private readonly IInsumoService insumoService;
         private readonly IUnidadDeMedidaService unidadDeMedidaService;
@@ -58,19 +60,17 @@ namespace WinForm_UI.Forms.Compras
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            Insumo? insumo = FormHelper.GetSelected<Insumo>(cmbInsumo);
-            UnidadDeMedida? unidad = FormHelper.GetSelected<UnidadDeMedida>(cmbUnidadDeMedida);
-            if (insumo == null || unidad == null)
+            Insumo? insumo = (this as IGetInput<Insumo>)?.GetObjectFromInputs();
+            Peso? peso = (this as IGetInput<Peso>)?.GetObjectFromInputs();
+            if (insumo is null || peso is null)
             {
-                MessageBox.Show("Por favor, seleccione un insumo y una unidad de medida.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             DetalleCompra detalle = new DetalleCompra
             {
                 Insumo = insumo,
-                Unidad = unidad,
-                Cantidad = nudCantidad.Value,
+                Peso = peso,
                 Costo = nudCosto.Value
             };
 
@@ -111,17 +111,17 @@ namespace WinForm_UI.Forms.Compras
                 MessageBox.Show("Por favor, seleccione un detalle para modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            Insumo? insumo = FormHelper.GetSelected<Insumo>(cmbInsumo);
-            UnidadDeMedida? unidad = FormHelper.GetSelected<UnidadDeMedida>(cmbUnidadDeMedida);
-            if (insumo == null || unidad == null)
+            Peso? peso = (this as IGetInput<Peso>)?.GetObjectFromInputs(detalle.Id);
+            Insumo? insumo = (this as IGetInput<Insumo>)?.GetObjectFromInputs(detalle.Insumo.Id);
+            if (peso is null || insumo is null)
             {
-                MessageBox.Show("Por favor, seleccione un insumo y una unidad de medida.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             detalle.Insumo = insumo;
-            detalle.Unidad = unidad;
-            detalle.Cantidad = nudCantidad.Value;
+            detalle.Peso = peso;
             detalle.Costo = nudCosto.Value;
+
             try
             {
                 detalleCompraContext.Update(detalle);
@@ -136,6 +136,57 @@ namespace WinForm_UI.Forms.Compras
         {
             this.eventBus.Unsubscribe<UnidadDeMedidaChangedEvent>(UnidadDeMedidaChanged);
             base.OnFormClosed(e);
+        }
+
+
+        public void UpdateData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalleCompra? GetObjectFromInputs(int id = -1)
+        {
+            Insumo? insumo = (this as IGetInput<Insumo>)?.GetObjectFromInputs();
+            Peso? peso = (this as IGetInput<Peso>)?.GetObjectFromInputs();
+            if (peso is null || insumo is null)
+            {
+                return null;
+            }
+
+            return new DetalleCompra
+            {
+                Id = id,
+                Insumo = insumo,
+                Peso = peso,
+                Costo = nudCosto.Value
+            };
+        }
+
+        Peso? IGetInput<Peso>.GetObjectFromInputs(int id)
+        {
+            UnidadDeMedida? unidadDeMedida = FormHelper.GetSelected<UnidadDeMedida>(cmbUnidadDeMedida);
+            if (unidadDeMedida == null)
+            {
+                MessageBox.Show("Por favor, seleccione una unidad de medida.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+            Peso peso = new Peso
+            {
+                Valor = nudCantidad.Value,
+                UnidadDeMedida = unidadDeMedida
+            };
+            return peso;
+        }
+
+        Insumo? IGetInput<Insumo>.GetObjectFromInputs(int id)
+        {
+            Insumo? insumo = FormHelper.GetSelected<Insumo>(cmbInsumo);
+            if (insumo is null)
+            {
+                MessageBox.Show("Por favor, seleccione un insumo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+            return insumo;
         }
     }
 }

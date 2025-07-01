@@ -1,6 +1,7 @@
 ﻿using DAL.Configuraciones.Models;
 using DAL.Ingredientes.Models;
 using DAL.Insumos.Models;
+using Entities.Compartido;
 using Entities.Configuraciones;
 using Entities.Ingredientes;
 using Mapper.Configuraciones;
@@ -25,8 +26,8 @@ namespace Mapper.Ingredientes
                 Id = cantidadIngrediente.Id,
                 RecetaId = receta.Id,
                 ComponenteRecetaId = cantidadIngrediente.ComponenteReceta.Id,
-                UnidadDeMedidaId = cantidadIngrediente.UnidadDeMedida.Id,
-                Cantidad = cantidadIngrediente.Cantidad,
+                UnidadDeMedidaId = cantidadIngrediente.Peso.UnidadDeMedida.Id,  
+                Cantidad = cantidadIngrediente.Peso.Valor,
                 DesperdicioAceptado = cantidadIngrediente.DesperdicioAceptado
             };
         }
@@ -52,13 +53,16 @@ namespace Mapper.Ingredientes
             }
 
             decimal costo = cantidadIngredienteModel.Costo??0;
-
+            Peso peso = new Peso
+            {
+                Valor = cantidadIngredienteModel.Cantidad,
+                UnidadDeMedida = unidadDeMedida
+            };
             CantidadIngrediente cantidadIngrediente = new CantidadIngrediente
             {
                 Id = cantidadIngredienteModel.Id,
-                Cantidad = cantidadIngredienteModel.Cantidad,
                 ComponenteReceta = componenteReceta,
-                UnidadDeMedida = unidadDeMedida,
+                Peso = peso,
                 DesperdicioAceptado = cantidadIngredienteModel.DesperdicioAceptado,
                 Costo = costo,
             };

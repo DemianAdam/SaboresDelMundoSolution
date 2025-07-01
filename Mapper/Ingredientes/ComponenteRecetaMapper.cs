@@ -1,5 +1,6 @@
 ﻿using DAL.Configuraciones.Models;
 using DAL.Ingredientes.Models;
+using DAL.Ingredientes.Models.Recetas;
 using DAL.Insumos.Models;
 using Entities.Ingredientes;
 using System;
