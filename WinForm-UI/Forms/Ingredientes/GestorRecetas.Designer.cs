@@ -50,6 +50,7 @@
             // 
             // dgvRecetas
             // 
+            this.dgvRecetas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRecetas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRecetas.Dock = DockStyle.Bottom;
             this.dgvRecetas.Location = new Point(0, 101);

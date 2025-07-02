@@ -16,16 +16,27 @@ using System.Diagnostics;
 using WinForm_UI.Events;
 using Interfaces;
 using Entities.Transacciones.Compras;
+using System.Collections.ObjectModel;
 
 namespace WinForm_UI.Forms.Compras
 {
-    public partial class GestorCompras : Form
+    public partial class GestorCompras : Form, IDataForm<Compra>
     {
         private readonly IEventBus eventBus;
         private readonly IFormFactoryService formFactoryService;
         private readonly IProveedorService proveedorService;
         private readonly ICompraService compraService;
         private readonly IContextFactory contextFactory;
+        
+        public List<ColumnConfiguration> ColumnsConfiguration => new List<ColumnConfiguration>
+        {
+            new (nameof(Compra.Fecha), 0),
+            new (nameof(Compra.Proveedor),1),
+            new (nameof(Compra.TotalPago), 2 , "Total Pagado"),
+            new (nameof(Compra.MontoTotal), 3, "Monto Total"),
+            new (nameof(Compra.EstaPagado), 4, "Esta Pagado?"),
+            new (nameof(Compra.TotalDeuda), 5, "Deuda Total")
+        };
 
         public GestorCompras(IEventBus eventBus, IFormFactoryService formFactoryService, IProveedorService proveedorService, ICompraService compraService, IContextFactory contextFactory)
         {
@@ -36,8 +47,14 @@ namespace WinForm_UI.Forms.Compras
             this.compraService = compraService;
             this.contextFactory = contextFactory;
             this.eventBus.Subscribe<ProveedorChangedEvent>(ProveedorChanged);
-            compraService.OnOperationFinished += (s, e) => FormHelper.UpdateControl(dgvCompras, compraService);
+            compraService.OnOperationFinished += CompraService_OnOperationFinished;
         }
+
+        private void CompraService_OnOperationFinished(object? sender, EventArgs e)
+        {
+            UpdateData();
+        }
+
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             this.eventBus.Unsubscribe<ProveedorChangedEvent>(ProveedorChanged);
@@ -58,7 +75,7 @@ namespace WinForm_UI.Forms.Compras
             cmbProveedores.Enabled = cboxTieneProveedor.Checked;
             dtpFecha.Value = DateTime.Now;
             ActualizarProveedores();
-            FormHelper.UpdateControl(dgvCompras, compraService);
+            UpdateData();
         }
 
         private void cboxTieneProveedor_CheckedChanged(object sender, EventArgs e)
@@ -69,29 +86,21 @@ namespace WinForm_UI.Forms.Compras
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             DateTime date = DateTime.Now.DayOfYear == dtpFecha.Value.DayOfYear ? DateTime.Now : dtpFecha.Value;
-            var compra = new Compra
-            {
-                Fecha = date,
-                MontoTotal = nudCostoTotal.Value,
-                Proveedor = cboxTieneProveedor.Checked ? cmbProveedores.GetSelected<Proveedor>() : null
-            };
+            Compra compra = GetObjectFromInputs();
+            compra.Fecha = date;
 
             if (MessageBox.Show("Queres agregar los detalles ahora?", "Agregar Detalles", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 var context = contextFactory.CreateContext<DetalleCompraMemoryContext>(compra);
                 DetallesCompraForm form = formFactoryService.CreateForm<DetallesCompraForm>(context);
-                this.AddOwnedForm(form);
                 form.ShowDialog();
-                this.RemoveOwnedForm(form);
             }
 
             if (MessageBox.Show("Queres pagar la compra ahora?", "Pagar Compra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 var context = contextFactory.CreateContext<PagoMemoryContext>(compra);
                 PagarCompraForm form = formFactoryService.CreateForm<PagarCompraForm>(context);
-                this.AddOwnedForm(form);
                 form.ShowDialog();
-                this.RemoveOwnedForm(form);
             }
 
             try
@@ -139,10 +148,8 @@ namespace WinForm_UI.Forms.Compras
                 MessageBox.Show("Debe seleccionar una compra para modificar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            compra.Fecha = dtpFecha.Value;
-            compra.MontoTotal = nudCostoTotal.Value;
-            compra.Proveedor = cboxTieneProveedor.Checked ? cmbProveedores.GetSelected<Proveedor>() : null;
-            compraService.Update(compra);
+            Compra updatedCompra = GetObjectFromInputs(compra.Id);
+            compraService.Update(updatedCompra);
         }
 
         private void btnModificarPagos_Click(object sender, EventArgs e)
@@ -174,6 +181,22 @@ namespace WinForm_UI.Forms.Compras
             var context = contextFactory.CreateContext<DetalleCompraDbContext>(compra);
             DetallesCompraForm form = formFactoryService.CreateForm<DetallesCompraForm>(context);
             form.ShowDialog();
+        }
+
+        public void UpdateData()
+        {
+            FormHelper.UpdateControl(dgvCompras, compraService, ColumnsConfiguration);
+        }
+
+        public Compra GetObjectFromInputs(int id = -1)
+        {
+            return new Compra
+            {
+                Id = id,
+                Fecha = dtpFecha.Value,
+                MontoTotal = nudCostoTotal.Value,
+                Proveedor = cboxTieneProveedor.Checked ? cmbProveedores.GetSelected<Proveedor>() : null
+            };
         }
     }
 }

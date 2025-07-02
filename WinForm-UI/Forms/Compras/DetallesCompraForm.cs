@@ -8,6 +8,7 @@ using Entities.Transacciones.Compras;
 using Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -29,6 +30,15 @@ namespace WinForm_UI.Forms.Compras
         private readonly IEventBus eventBus;
         private readonly IDetalleCompraContext detalleCompraContext;
         public List<DetalleCompra> Detalles { get => detalleCompraContext.GetAll(); }
+
+        public List<ColumnConfiguration> ColumnsConfiguration =>
+            new List<ColumnConfiguration>
+            {
+                new ColumnConfiguration(nameof(DetalleCompra.Insumo), 0),
+                new ColumnConfiguration(nameof(DetalleCompra.Peso), 1),
+                new ColumnConfiguration(nameof(DetalleCompra.Costo), 2)
+            };
+
         public DetallesCompraForm(IInsumoService insumoService, IUnidadDeMedidaService unidadDeMedidaService, IEventBus eventBus, IDetalleCompraContext detalleCompraContext)
         {
             InitializeComponent();
@@ -42,7 +52,7 @@ namespace WinForm_UI.Forms.Compras
 
         private void DetalleCompraContext_OnOperationFinished(object? sender, EventArgs e)
         {
-            FormHelper.UpdateControl(dgvDetalles, Detalles);
+            UpdateData();
         }
 
         private void UnidadDeMedidaChanged(UnidadDeMedidaChangedEvent @event)
@@ -141,7 +151,7 @@ namespace WinForm_UI.Forms.Compras
 
         public void UpdateData()
         {
-            throw new NotImplementedException();
+            FormHelper.UpdateControl(dgvDetalles, Detalles,ColumnsConfiguration);
         }
 
         public DetalleCompra? GetObjectFromInputs(int id = -1)

@@ -47,6 +47,7 @@
             // 
             // dgvCompras
             // 
+            this.dgvCompras.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCompras.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCompras.Dock = DockStyle.Bottom;
             this.dgvCompras.Location = new Point(0, 101);

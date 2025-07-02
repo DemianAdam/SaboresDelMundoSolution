@@ -1,21 +1,10 @@
-﻿using BLL;
-using BLL.Configuraciones.Contracts;
+﻿using BLL.Configuraciones.Contracts;
 using BLL.Ingredientes.Context;
 using BLL.Ingredientes.Contracts;
 using Entities.Compartido;
 using Entities.Configuraciones;
 using Entities.Ingredientes;
 using Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using WinForm_UI.Contracts;
 using WinForm_UI.Helpers;
 
@@ -23,14 +12,21 @@ namespace WinForm_UI.Forms.Ingredientes
 {
     public partial class GestorRecetas : Form, IDataForm<Receta>, IGetInput<Peso>
     {
-
         private readonly IRecetaService recetaService;
         private readonly IContextFactory contextFactory;
         private readonly IFormFactoryService formFactoryService;
         private readonly IUnidadDeMedidaService unidadDeMedidaService;
-        private readonly ReadOnlyDictionary<string, int> ColumnOrder;
+
+        public List<ColumnConfiguration> ColumnsConfiguration => new List<ColumnConfiguration>
+        {
+            new ColumnConfiguration(nameof(Receta.Nombre), 0),
+            new ColumnConfiguration(nameof(Receta.Descripcion), 1),
+            new ColumnConfiguration(nameof(Receta.Peso), 2),
+            new ColumnConfiguration(nameof(Receta.Porciones), 3)
+        };
 
         private List<Receta> recetas => recetaService.GetAll();
+
         public GestorRecetas(IRecetaService recetaService, IContextFactory contextFactory, IFormFactoryService formFactoryService, IUnidadDeMedidaService unidadDeMedidaService)
         {
             InitializeComponent();
@@ -39,13 +35,6 @@ namespace WinForm_UI.Forms.Ingredientes
             this.formFactoryService = formFactoryService;
             this.unidadDeMedidaService = unidadDeMedidaService;
             this.recetaService.OnOperationFinished += RecetaService_OnOperationFinished;
-            this.ColumnOrder = new ReadOnlyDictionary<string, int>(new Dictionary<string, int>
-            {
-                { nameof(Receta.Nombre), 1 },
-                { nameof(Receta.Descripcion), 2 },
-                { nameof(Receta.Peso), 3 },
-                { nameof(Receta.Porciones), 5 }
-            });
         }
 
         private void RecetaService_OnOperationFinished(object? sender, EventArgs e)
@@ -159,14 +148,7 @@ namespace WinForm_UI.Forms.Ingredientes
 
         public void UpdateData()
         {
-            FormHelper.UpdateControl(dgvRecetas, recetas);
-            foreach (var item in ColumnOrder)
-            {
-                if (dgvRecetas.Columns.Contains(item.Key))
-                {
-                    dgvRecetas.Columns[item.Key].DisplayIndex = item.Value;
-                }
-            }
+            FormHelper.UpdateControl(dgvRecetas, recetas, ColumnsConfiguration);
         }
 
         Peso? IGetInput<Peso>.GetObjectFromInputs(int id)

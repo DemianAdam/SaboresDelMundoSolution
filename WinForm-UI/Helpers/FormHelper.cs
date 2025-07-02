@@ -1,6 +1,7 @@
 ﻿using BLL;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,14 +38,30 @@ namespace WinForm_UI.Helpers
             childForm.Show();
         }
 
-        public static void UpdateControl<T>(DataGridView dgv, IGetAll<T> service)
+        public static void UpdateControl<T>(DataGridView dgv, IGetAll<T> service, List<ColumnConfiguration>? columnOrders = null)
         {
-            UpdateControl(dgv, service.GetAll());
+            UpdateControl(dgv, service.GetAll(), columnOrders);
         }
-        public static void UpdateControl<T>(DataGridView dgv, List<T> list)
+        public static void UpdateControl<T>(DataGridView dgv, List<T> list, List<ColumnConfiguration>? columnOrders = null)
         {
             dgv.DataSource = null;
             dgv.DataSource = list;
+            if (columnOrders is not null)
+            {
+                foreach (var column in columnOrders)
+                {              
+                    if (!dgv.Columns.Contains(column.Name))
+                    {
+                        continue;
+                    }
+                    dgv.Columns[column.Name].Visible = column.Visible;
+                    dgv.Columns[column.Name].HeaderText = column.DisplayName;
+                    if (column.DisplayIndex != -1)
+                    {
+                        dgv.Columns[column.Name].DisplayIndex = column.DisplayIndex;
+                    }
+                }
+            }
         }
         public static void UpdateControl<T>(ComboBox cmb, IGetAll<T> service, string? dispalyMember = null)
         {
